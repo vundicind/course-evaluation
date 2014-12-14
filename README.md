@@ -21,6 +21,18 @@ sudo apt-get install php5-mcrypt
 php5enmod mcrypt
 ```
 
+Update all the dependencies
+
+```sh
+bin/composer update
+```
+
+Make all db migrations 
+
+```sh
+./yii migrate
+```
+
 ### Apache
 
 ```sh
@@ -29,3 +41,11 @@ ln -s /home/vundicind/course-evaluation/provision/apache2.conf course-evaluation
 a2enconf course-evaluation
 service apache2 reload
 ```
+
+You can test now enetering in the browser the address:
+
+http://localhost/course-evaluation/
+
+or 
+
+http://localhost/course-evaluation-backend/
