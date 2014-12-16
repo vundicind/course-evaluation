@@ -33,6 +33,7 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Groups', 'url' => ['/group/index']],
                 ['label' => 'Instructors', 'url' => ['/instructor/index']],
                 ['label' => 'Courses', 'url' => ['/course/index']],
             ];
