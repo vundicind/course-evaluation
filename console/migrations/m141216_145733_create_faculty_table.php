@@ -19,7 +19,6 @@ class m141216_145733_create_faculty_table extends Migration
         ], $tableOptions);
         
         $this->createIndex('NAME', '{{%faculty}}', 'name', true);
-
     }
 
     public function down()
