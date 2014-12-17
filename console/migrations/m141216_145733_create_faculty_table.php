@@ -23,6 +23,8 @@ class m141216_145733_create_faculty_table extends Migration
 
     public function down()
     {
+        $this->dropIndex('NAME', '{{%faculty}}');
+                
         $this->dropTable('{{%faculty}}');
     }
 }
