@@ -28,8 +28,9 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 50]
+            [['name', 'specialty_id'], 'required'],
+            [['name'], 'string', 'max' => 50],
+            [['specialty_id'], 'integer'],
         ];
     }
 
@@ -41,6 +42,7 @@ class Group extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'specialty_id' => Yii::t('app', 'Specialty ID'),
         ];
     }
 
@@ -50,5 +52,13 @@ class Group extends \yii\db\ActiveRecord
     public function getSubgroup()
     {
         return $this->hasOne(Subgroup::className(), ['id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSpecialty()
+    {
+        return $this->hasOne(Specialty::className(), ['id' => 'specialty_id']);
     }
 }
