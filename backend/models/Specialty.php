@@ -33,7 +33,8 @@ class Specialty extends \yii\db\ActiveRecord
         return [
             [['name', 'faculty_id', 'study_cycle_id'], 'required'],
             [['faculty_id', 'study_cycle_id'], 'integer'],
-            [['name'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255],
+            [['code'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,6 +46,7 @@ class Specialty extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'code' => Yii::t('app', 'Code'),
             'faculty_id' => Yii::t('app', 'Faculty ID'),
             'study_cycle_id' => Yii::t('app', 'Study Cycle ID'),
         ];

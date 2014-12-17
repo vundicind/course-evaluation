@@ -16,6 +16,8 @@ use app\models\StudyCycle;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+    
+    <?= $form->field($model, 'code')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'faculty_id')->dropDownList(ArrayHelper::map(Faculty::find()->asArray()->all(), 'id', 'name')) ?>
 
