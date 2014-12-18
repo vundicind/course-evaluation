@@ -33,7 +33,7 @@ class Instructor extends \yii\db\ActiveRecord
     {
         return [
             [['first_name', 'last_name'], 'required'],
-            [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 50]
+            [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 255],
         ];
     }
 
