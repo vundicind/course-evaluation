@@ -17,10 +17,14 @@ class m141218_100550_create_course_table extends Migration
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING . ' NOT NULL',
         ], $tableOptions);
+        
+        $this->createIndex('NAME', '{{%course}}', 'name', true);
     }
 
     public function down()
     {
+        $this->dropIndex('NAME', '{{%course}}');
+        
         $this->dropTable('{{%course}}');
     }
 }

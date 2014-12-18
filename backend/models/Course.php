@@ -27,7 +27,8 @@ class Course extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 50]
+            [['name'], 'string', 'max' => 255],
+            [['name'], 'unique'],
         ];
     }
 

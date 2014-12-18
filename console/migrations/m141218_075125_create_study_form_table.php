@@ -17,11 +17,15 @@ class m141218_075125_create_study_form_table extends Migration
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING . ' NOT NULL',
         ], $tableOptions);
+        
+        $this->createIndex('NAME', '{{%study_form}}', 'name', true);
 
     }
 
     public function down()
     {
+        $this->dropIndex('NAME', '{{%course}}');
+        
         $this->dropTable('{{%study_form}}');
     }
 }
