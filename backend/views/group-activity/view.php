@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'activity_type_id',
             'course_id',
             'instructor_id',
+            'semester_id',
             'subgroup',
         ],
     ]) ?>

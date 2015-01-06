@@ -12,12 +12,14 @@ use Yii;
  * @property integer $activity_type_id
  * @property integer $course_id
  * @property integer $instructor_id
+ * @property integer $semester_id 
  * @property integer $subgroup
  *
  * @property Instructor $instructor
  * @property ActivityType $activityType
  * @property Course $course
  * @property Group $group
+ * @property Semester $semester
  */
 class GroupActivity extends \yii\db\ActiveRecord
 {
@@ -35,8 +37,8 @@ class GroupActivity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'subgroup'], 'required'],
-            [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'subgroup'], 'integer']
+            [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id', 'subgroup'], 'required'],
+            [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id', 'subgroup'], 'integer']
         ];
     }
 
@@ -51,6 +53,7 @@ class GroupActivity extends \yii\db\ActiveRecord
             'activity_type_id' => Yii::t('app', 'Activity Type ID'),
             'course_id' => Yii::t('app', 'Course ID'),
             'instructor_id' => Yii::t('app', 'Instructor ID'),
+        	'semester_id' => Yii::t('app', 'Semester ID'),
             'subgroup' => Yii::t('app', 'Subgroup'),
         ];
     }
@@ -85,5 +88,13 @@ class GroupActivity extends \yii\db\ActiveRecord
     public function getGroup()
     {
         return $this->hasOne(Group::className(), ['id' => 'group_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSemester()
+    {
+    	return $this->hasOne(Semester::className(), ['id' => 'semester_id']);
     }
 }
