@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name',
             ['attribute' => 'specialty', 'value' => 'specialty.name'],
+            ['attribute' => 'studyForm', 'value' => 'studyForm.name'],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

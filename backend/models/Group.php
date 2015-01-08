@@ -28,9 +28,9 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'specialty_id'], 'required'],
-            [['name'], 'string', 'max' => 50],
-            [['specialty_id'], 'integer'],
+            [['name', 'specialty_id', 'study_form_id'], 'required'],
+            [['name'], 'string', 'max' => 255],
+            [['specialty_id', 'study_form_id'], 'integer'],
         ];
     }
 
@@ -43,6 +43,7 @@ class Group extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'specialty_id' => Yii::t('app', 'Specialty ID'),
+            'study_form_id' => Yii::t('app', 'Study Form ID'),
         ];
     }
 
@@ -61,5 +62,12 @@ class Group extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Specialty::className(), ['id' => 'specialty_id']);
     }
-    
+
+            /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStudyForm()
+    {
+        return $this->hasOne(StudyForm::className(), ['id' => 'study_form_id']);
+    }
 }

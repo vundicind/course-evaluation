@@ -14,6 +14,8 @@ class GroupSearch extends Group
 {
     public $specialty;
     
+    public $studyForm;
+    
     /**
      * @inheritdoc
      */
@@ -21,7 +23,7 @@ class GroupSearch extends Group
     {
         return [
             [['id'], 'integer'],
-            [['name', 'specialty'], 'safe'],
+            [['name', 'specialty', 'studyForm'], 'safe'],
         ];
     }
 
@@ -44,16 +46,23 @@ class GroupSearch extends Group
     public function search($params)
     {
         $query = Group::find();
-        $query->joinWith(['specialty']);
+        $query->joinWith(['specialty', 'studyForm']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         
-        $dataProvider->sort->attributes['specialty'] = [
-            'asc' => ['specialty.name' => SORT_ASC],
-            'desc' => ['specialty.name' => SORT_DESC],
-        ];        
+        $dataProvider->sort->attributes = [
+            'name',
+            'specialty' => [
+                'asc' => ['specialty.name' => SORT_ASC],
+                'desc' => ['specialty.name' => SORT_DESC],
+            ],
+            'studyForm' => [
+                'asc' => ['studyForm.name' => SORT_ASC],
+                'desc' => ['studyForm.name' => SORT_DESC],
+            ],
+        ];
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
@@ -61,9 +70,9 @@ class GroupSearch extends Group
 
         $query->andFilterWhere(['id' => $this->id]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
-        
-        $query->andFilterWhere(['like', 'specialty.name', $this->specialty]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'specialty.name', $this->specialty])
+            ->andFilterWhere(['like', 'study_form.name', $this->studyForm]);
 
         return $dataProvider;
     }
