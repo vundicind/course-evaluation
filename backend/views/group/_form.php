@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Specialty;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Group */
