@@ -12,6 +12,9 @@ nbproject
 .project
 .settings
 
+# komodo project files
+*.komodoproject
+
 # windows thumbnail cache
 Thumbs.db
 
