@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string short_name
  */
 class Faculty extends \yii\db\ActiveRecord
 {
@@ -27,8 +28,8 @@ class Faculty extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 50],
-            [['name'], 'unique'],
+            [['name', 'short_name'], 'string', 'max' => 255],
+            [['name', 'short_name'], 'unique'],
         ];
     }
 
@@ -40,6 +41,7 @@ class Faculty extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'short_name' => Yii::t('app', 'Short Name'),
         ];
     }
 }
