@@ -12,14 +12,16 @@ use app\models\Group;
  */
 class GroupSearch extends Group
 {
+    public $specialty;
+    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'specialty_id'], 'integer'],
-            [['name'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'specialty'], 'safe'],
         ];
     }
 
@@ -42,21 +44,26 @@ class GroupSearch extends Group
     public function search($params)
     {
         $query = Group::find();
+        $query->joinWith(['specialty']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $dataProvider->sort->attributes['specialty'] = [
+            'asc' => ['specialty.name' => SORT_ASC],
+            'desc' => ['specialty.name' => SORT_DESC],
+        ];        
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'specialty_id' => $this->specialty_id,
-        ]);
+        $query->andFilterWhere(['id' => $this->id]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
+        
+        $query->andFilterWhere(['like', 'specialty.name', $this->specialty]);
 
         return $dataProvider;
     }
