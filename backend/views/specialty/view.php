@@ -31,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'code',
-            'faculty_id',
-            'study_cycle_id',
+            'faculty.name',
+            'studyCycle.name',
         ],
     ]) ?>
 
