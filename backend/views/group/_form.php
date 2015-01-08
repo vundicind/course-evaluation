@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\Specialty;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Group */
@@ -14,8 +12,8 @@ use app\models\Specialty;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
-    
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+
     <?= $form->field($model, 'specialty_id')->dropDownList(ArrayHelper::map(Specialty::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Specialty')]) ?>
 
     <div class="form-group">

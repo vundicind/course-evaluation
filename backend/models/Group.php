@@ -61,4 +61,5 @@ class Group extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Specialty::className(), ['id' => 'specialty_id']);
     }
+    
 }

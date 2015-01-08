@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use app\models\Group;
-use yii\data\ActiveDataProvider;
+use app\models\GroupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,11 +32,11 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Group::find(),
-        ]);
+        $searchModel = new GroupSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
