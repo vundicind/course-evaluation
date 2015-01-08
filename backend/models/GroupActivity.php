@@ -37,7 +37,7 @@ class GroupActivity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id', 'subgroup'], 'required'],
+            [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id'], 'required'],
             [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id', 'subgroup'], 'integer']
         ];
     }

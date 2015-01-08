@@ -12,6 +12,16 @@ use app\models\GroupActivity;
  */
 class GroupActivitySearch extends GroupActivity
 {
+    public $group;
+    
+    public $activityType;
+    
+    public $course;
+    
+    public $instructor;
+    
+    public $semester;
+
     /**
      * @inheritdoc
      */
@@ -19,6 +29,7 @@ class GroupActivitySearch extends GroupActivity
     {
         return [
             [['id', 'group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id', 'subgroup'], 'integer'],
+            [['group', 'activityType', 'course', 'instructor', 'semester'], 'safe'],
         ];
     }
 
@@ -41,24 +52,46 @@ class GroupActivitySearch extends GroupActivity
     public function search($params)
     {
         $query = GroupActivity::find();
+        $query->joinWith(['group', 'activityType', 'course', 'instructor', 'semester']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $dataProvider->sort->attributes = [
+            'group' => [
+                'asc' => ['group.name' => SORT_ASC],
+                'desc' => ['group.name' => SORT_DESC],
+            ],
+            'activityType' => [
+                'asc' => ['activityType.name' => SORT_ASC],
+                'desc' => ['activityType.name' => SORT_DESC],
+            ],
+            'course' => [
+                'asc' => ['course.name' => SORT_ASC],
+                'desc' => ['course.name' => SORT_DESC],
+            ],
+            'instructor' => [
+                'asc' => ['instructor.last_name' => SORT_ASC],
+                'desc' => ['instructor.last_name' => SORT_DESC],
+            ],
+            'semester' => [
+                'asc' => ['semester.name' => SORT_ASC],
+                'desc' => ['semester.name' => SORT_DESC],
+            ],
+        ];
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'group_id' => $this->group_id,
-            'activity_type_id' => $this->activity_type_id,
-            'course_id' => $this->course_id,
-            'instructor_id' => $this->instructor_id,
-            'semester_id' => $this->semester_id,
-            'subgroup' => $this->subgroup,
-        ]);
+        $query->andFilterWhere(['id' => $this->id]);
+        
+        $query->andFilterWhere(['like', 'group.name', $this->group])
+            ->andFilterWhere(['like', 'activity_type.name', $this->activityType])
+            ->andFilterWhere(['like', 'course.name', $this->course])
+            ->andFilterWhere(['like', 'instructor.last_name', $this->instructor])
+            ->andFilterWhere(['like', 'semester.name', $this->semester]);
 
         return $dataProvider;
     }
