@@ -72,6 +72,8 @@ class GroupActivitySearch extends GroupActivity
                 'desc' => ['course.name' => SORT_DESC],
             ],
             'instructor' => [
+            //http://www.yiiframework.com/doc-2.0/yii-data-sort.html
+            //http://www.yiiframework.com/wiki/621/filter-sort-by-calculated-related-fields-in-gridview-yii-2-0/
                 'asc' => ['instructor.last_name' => SORT_ASC],
                 'desc' => ['instructor.last_name' => SORT_DESC],
             ],
