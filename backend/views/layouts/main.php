@@ -33,19 +33,22 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
-
-            	['label' => \Yii::t('app', '{n, plural, =1{Faculty} other{Faculties}}', ['n' => 2]), 'url' => ['/faculty/index']],
-           		['label' => \Yii::t('app', '{n, plural, =1{Specialty} other{Specialties}}', ['n' => 2]), 'url' => ['/specialty/index']],
-            	['label' => \Yii::t('app', '{n, plural, =1{Study Cycle} other{Study Cycles}}', ['n' => 2]), 'url' => ['/study-cycle/index']],
-           		['label' => \Yii::t('app', '{n, plural, =1{Study Form} other{Study Forms}}', ['n' => 2]), 'url' => ['/study-form/index']],            		
-           		['label' => \Yii::t('app', '{n, plural, =1{Semester} other{Semesters}}', ['n' => 2]), 'url' => ['/semester/index']],            		
-
-            	['label' => \Yii::t('app', '{n, plural, =1{Instructor} other{Instructors}}', ['n' => 2]), 'url' => ['/instructor/index']],
-				['label' => \Yii::t('app', '{n, plural, =1{Course} other{Courses}}', ['n' => 2]), 'url' => ['/course/index']],
-           		['label' => \Yii::t('app', '{n, plural, =1{Activity Type} other{Activity Types}}', ['n' => 2]), 'url' => ['/activity-type/index']],            		
-            		
-                ['label' => \Yii::t('app', '{n, plural, =1{Group} other{Groups}}', ['n' => 2]), 'url' => ['/group/index']],
-            	['label' => \Yii::t('app', '{n, plural, =1{Group Activity} other{Groups Activities}}', ['n' => 2]), 'url' => ['/group-activity/index']],
+				['label' => Yii::t('app', 'Data1'), 'items' => [
+		            ['label' => Yii::t('app', '{n, plural, =1{Faculty} other{Faculties}}', ['n' => 2]), 'url' => ['/faculty/index']],
+		           	['label' => Yii::t('app', '{n, plural, =1{Specialty} other{Specialties}}', ['n' => 2]), 'url' => ['/specialty/index']],
+		            ['label' => Yii::t('app', '{n, plural, =1{Study Cycle} other{Study Cycles}}', ['n' => 2]), 'url' => ['/study-cycle/index']],
+		           	['label' => Yii::t('app', '{n, plural, =1{Study Form} other{Study Forms}}', ['n' => 2]), 'url' => ['/study-form/index']],            		
+		           	['label' => Yii::t('app', '{n, plural, =1{Semester} other{Semesters}}', ['n' => 2]), 'url' => ['/semester/index']],            		
+				]],
+				['label' => Yii::t('app', 'Data2'), 'items' => [
+		            ['label' => Yii::t('app', '{n, plural, =1{Instructor} other{Instructors}}', ['n' => 2]), 'url' => ['/instructor/index']],
+					['label' => Yii::t('app', '{n, plural, =1{Course} other{Courses}}', ['n' => 2]), 'url' => ['/course/index']],
+		           	['label' => Yii::t('app', '{n, plural, =1{Activity Type} other{Activity Types}}', ['n' => 2]), 'url' => ['/activity-type/index']],            		
+				]],
+				['label' => Yii::t('app', 'Data3'), 'items' => [
+		            ['label' => Yii::t('app', '{n, plural, =1{Group} other{Groups}}', ['n' => 2]), 'url' => ['/group/index']],
+		            ['label' => Yii::t('app', '{n, plural, =1{Group Activity} other{Groups Activities}}', ['n' => 2]), 'url' => ['/group-activity/index']],
+				]],
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
