@@ -19,7 +19,7 @@ class m141222_063039_create_group_activity_table extends Migration
             'activity_type_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'course_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'instructor_id' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'subgroup' => Schema::TYPE_BOOLEAN . ' NOT NULL',
+            'subgroup' => Schema::TYPE_BOOLEAN . ' NULL',
         ], $tableOptions);
         
         $this->addForeignKey('FK_group_activity_group', '{{%group_activity}}', 'group_id', '{{%group}}', 'id', 'RESTRICT', 'RESTRICT');

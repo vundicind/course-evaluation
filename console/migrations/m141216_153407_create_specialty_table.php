@@ -16,7 +16,7 @@ class m141216_153407_create_specialty_table extends Migration
         $this->createTable('{{%specialty}}', [
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING . ' NOT NULL',
-            'code' => Schema::TYPE_STRING . ' NOT NULL',
+            'code' => Schema::TYPE_STRING . ' NULL',
             'faculty_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'study_cycle_id' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
