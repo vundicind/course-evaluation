@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\GroupActivitySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Group Activities');
@@ -12,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="group-activity-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
@@ -21,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -29,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'activity_type_id',
             'course_id',
             'instructor_id',
-            'semester_id',
+            // 'semester_id',
             // 'subgroup',
 
             ['class' => 'yii\grid\ActionColumn'],
