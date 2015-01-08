@@ -12,14 +12,18 @@ use app\models\Specialty;
  */
 class SpecialtySearch extends Specialty
 {
+    public $faculty;
+    
+    public $studyCycle;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'faculty_id', 'study_cycle_id'], 'integer'],
-            [['name', 'code'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'code', 'faculty', 'studyCycle'], 'safe'],
         ];
     }
 
@@ -42,23 +46,32 @@ class SpecialtySearch extends Specialty
     public function search($params)
     {
         $query = Specialty::find();
+        $query->joinWith(['faculty', 'studyCycle']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $dataProvider->sort->attributes['faculty'] = [
+            'asc' => ['faculty.name' => SORT_ASC],
+            'desc' => ['faculty.name' => SORT_DESC],
+        ];        
 
+        $dataProvider->sort->attributes['studyCycle'] = [
+            'asc' => ['studyCycle.name' => SORT_ASC],
+            'desc' => ['studyCycle.name' => SORT_DESC],
+        ];        
+        
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'faculty_id' => $this->faculty_id,
-            'study_cycle_id' => $this->study_cycle_id,
-        ]);
+        $query->andFilterWhere(['id' => $this->id]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'code', $this->code]);
+            ->andFilterWhere(['like', 'code', $this->code])
+            ->andFilterWhere(['like', 'faculty.name', $this->faculty])
+            ->andFilterWhere(['like', 'studyCycle.name', $this->studyCycle]);            
 
         return $dataProvider;
     }
