@@ -27,12 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'group_id',
-            'activity_type_id',
-            'course_id',
-            'instructor_id',
-            // 'semester_id',
+            ['attribute' => 'group', 'value' => 'group.name'],
+            ['attribute' => 'activityType', 'value' => 'activityType.name'],
+            ['attribute' => 'course', 'value' => 'course.name'],
+            ['attribute' => 'instructor', 'value' => 'instructor.last_name'],
+            ['attribute' => 'semester', 'value' => 'semester.name'],
             // 'subgroup',
 
             ['class' => 'yii\grid\ActionColumn'],
