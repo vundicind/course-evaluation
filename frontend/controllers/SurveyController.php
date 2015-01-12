@@ -40,6 +40,14 @@ class SurveyController extends \yii\web\Controller
     		->all();
     		return $this->render('index', ['groups' => $groups]);
     	}
+    	
+    	if(!empty($_GET['g']))
+    	{
+    		$groups = Group::find()
+    		->andFilterWhere(['specialty_id' => $_GET['s']])
+    		->all();
+    		return $this->render('index', ['groups' => $groups]);
+    	}
     	 
         $faculties = Faculty::find()->all();
         return $this->render('index', ['faculties' => $faculties]);
