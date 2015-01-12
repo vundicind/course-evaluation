@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\StudyForm;
+use common\models\StudyForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
