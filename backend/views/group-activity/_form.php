@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\Group;
+use common\models\Group;
 use app\models\ActivityType;
 use app\models\Course;
 use app\models\Instructor;

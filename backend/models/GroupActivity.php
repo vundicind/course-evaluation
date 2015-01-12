@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use common\models\Group;
 
 /**
  * This is the model class for table "group_activity".
