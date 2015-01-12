@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Group;
+use common\models\Group;
 
 /**
  * GroupSearch represents the model behind the search form about `app\models\Group`.
@@ -70,7 +70,7 @@ class GroupSearch extends Group
 
         $query->andFilterWhere(['id' => $this->id]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'group.name', $this->name])
             ->andFilterWhere(['like', 'specialty.name', $this->specialty])
             ->andFilterWhere(['like', 'study_form.name', $this->studyForm]);
 

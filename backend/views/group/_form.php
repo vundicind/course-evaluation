@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\Specialty;
-use app\models\StudyForm;
+use common\models\Specialty;
+use common\models\StudyForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Group */
