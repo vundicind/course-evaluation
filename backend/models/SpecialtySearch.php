@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Specialty;
+use common\models\Specialty;
 
 /**
  * SpecialtySearch represents the model behind the search form about `app\models\Specialty`.
@@ -68,7 +68,7 @@ class SpecialtySearch extends Specialty
 
         $query->andFilterWhere(['id' => $this->id]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'specialty.name', $this->name])
             ->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'faculty.name', $this->faculty])
             ->andFilterWhere(['like', 'studyCycle.name', $this->studyCycle]);            
