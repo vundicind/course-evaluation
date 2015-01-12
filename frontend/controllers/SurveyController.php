@@ -2,14 +2,13 @@
 
 namespace frontend\controllers;
 
-//use backend\models\Faculty;
+use common\models\Faculty;
 
 class SurveyController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $faculties = \backend\models\Faculty::find()->all();
+        $faculties = Faculty::find()->all();
         return $this->render('index', ['faculties' => $faculties]);
     }
-
 }
