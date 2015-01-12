@@ -42,3 +42,11 @@ if(!empty($groups))
 		echo yii\helpers\Html::a($g->name, ['index', 'g' => $g->id]) . '<br />';
 }
 ?>
+
+<?php
+if(!empty($groupActivities))
+{	
+	foreach($groupActivities as $ga)
+		echo yii\helpers\Html::a($ga->id, ['index', 'ga' => $ga->id]) . '<br />';
+}
+?>

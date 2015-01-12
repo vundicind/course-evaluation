@@ -7,6 +7,7 @@ use common\models\StudyCycle;
 use common\models\StudyForm;
 use common\models\Specialty;
 use common\models\Group;
+use common\models\GroupActivity;
 
 class SurveyController extends \yii\web\Controller
 {
@@ -43,10 +44,10 @@ class SurveyController extends \yii\web\Controller
     	
     	if(!empty($_GET['g']))
     	{
-    		$groups = Group::find()
-    		->andFilterWhere(['specialty_id' => $_GET['s']])
+    		$groupActivities = GroupActivity::find()
+    		->andFilterWhere(['group_id' => $_GET['g']])
     		->all();
-    		return $this->render('index', ['groups' => $groups]);
+    		return $this->render('index', ['groupActivities' => $groupActivities]);
     	}
     	 
         $faculties = Faculty::find()->all();
