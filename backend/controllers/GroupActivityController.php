@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\GroupActivity;
-use app\models\GroupActivitySearch;
+use common\models\GroupActivity;
+use backend\models\GroupActivitySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

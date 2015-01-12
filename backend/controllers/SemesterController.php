@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Semester;
+use common\models\Semester;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

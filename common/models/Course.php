@@ -1,23 +1,23 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "activity_type".
+ * This is the model class for table "course".
  *
  * @property integer $id
  * @property string $name
  */
-class ActivityType extends \yii\db\ActiveRecord
+class Course extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'activity_type';
+        return 'course';
     }
 
     /**
@@ -28,7 +28,7 @@ class ActivityType extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['name'], 'unique']
+            [['name'], 'unique'],
         ];
     }
 
@@ -39,7 +39,7 @@ class ActivityType extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Course Name'),
         ];
     }
 }
