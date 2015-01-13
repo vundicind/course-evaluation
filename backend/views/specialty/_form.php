@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\Faculty;
-use app\models\StudyCycle;
+use common\models\Faculty;
+use common\models\StudyCycle;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Specialty */
