@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Group;
-use app\models\ActivityType;
-use app\models\Course;
-use app\models\Instructor;
-use app\models\Semester;
+use common\models\ActivityType;
+use common\models\Course;
+use common\models\Instructor;
+use common\models\Semester;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GroupActivity */
