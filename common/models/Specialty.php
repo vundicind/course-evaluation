@@ -32,6 +32,7 @@ class Specialty extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'faculty_id', 'study_cycle_id'], 'required'],
+            [['name'], 'unique', 'attributes' => ['name', 'faculty_id', 'study_cycle_id']],
             [['faculty_id', 'study_cycle_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 255],
