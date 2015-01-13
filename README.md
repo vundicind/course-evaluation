@@ -18,7 +18,8 @@ Make sure you have `mcrypt` installed and enabled.
 
 ```sh
 sudo apt-get install php5-mcrypt
-php5enmod mcrypt
+sudo php5enmod mcrypt
+sudo service apache2 restart
 ```
 
 Update all the dependencies
