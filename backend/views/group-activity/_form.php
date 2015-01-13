@@ -20,11 +20,11 @@ use common\models\Semester;
 
     <?= $form->field($model, 'group_id')->dropDownList(ArrayHelper::map(Group::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Group')]) ?>
 
-    <?= $form->field($model, 'activity_type_id')->dropDownList(ArrayHelper::map(ActivityType::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Activity Type')]) ?>
-
     <?= $form->field($model, 'course_id')->dropDownList(ArrayHelper::map(Course::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Course')]) ?>
 
     <?= $form->field($model, 'instructor_id')->dropDownList(ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', function ($element) { return $element['first_name'] . ' ' . $element['last_name'];}), ['prompt' => Yii::t('app', 'Select Instructor')]) ?>
+    
+    <?= $form->field($model, 'activity_type_id')->dropDownList(ArrayHelper::map(ActivityType::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Activity Type')]) ?>
     
     <?= $form->field($model, 'semester_id')->dropDownList(ArrayHelper::map(Semester::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Semester')]) ?>
     
