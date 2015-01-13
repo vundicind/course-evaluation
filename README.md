@@ -21,6 +21,11 @@ sudo apt-get install php5-mcrypt
 sudo php5enmod mcrypt
 sudo service apache2 restart
 ```
+[Patch](http://blogyii.com/blog/undefined-method-csrfmetatags) the composer
+
+```sh
+bin/composer global require "fxp/composer-asset-plugin:1.0.0-beta4"
+```
 
 Update all the dependencies
 
