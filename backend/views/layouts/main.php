@@ -31,6 +31,10 @@ AppAsset::register($this);
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
+            
+            //$form = ActiveForm::begin();
+            //echo Html::dropDownList("sss", "", ["1"=>"www", "2"=>"eeeeeeeeeee"]);
+            
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
 				['label' => Yii::t('app', 'Data1'), 'items' => [

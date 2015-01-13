@@ -34,5 +34,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'studyForm.name',
         ],
     ]) ?>
-
+    
 </div>
