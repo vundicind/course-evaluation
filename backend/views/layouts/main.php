@@ -35,8 +35,8 @@ AppAsset::register($this);
                 ['label' => 'Home', 'url' => ['/site/index']],
 				['label' => Yii::t('app', 'Data1'), 'items' => [
 		            ['label' => Yii::t('app', '{n, plural, =1{Faculty} other{Faculties}}', ['n' => 2]), 'url' => ['/faculty/index']],
-		           	['label' => Yii::t('app', '{n, plural, =1{Specialty} other{Specialties}}', ['n' => 2]), 'url' => ['/specialty/index']],
-		            ['label' => Yii::t('app', '{n, plural, =1{Study Cycle} other{Study Cycles}}', ['n' => 2]), 'url' => ['/study-cycle/index']],
+					['label' => Yii::t('app', '{n, plural, =1{Study Cycle} other{Study Cycles}}', ['n' => 2]), 'url' => ['/study-cycle/index']],
+					['label' => Yii::t('app', '{n, plural, =1{Specialty} other{Specialties}}', ['n' => 2]), 'url' => ['/specialty/index']],
 		           	['label' => Yii::t('app', '{n, plural, =1{Study Form} other{Study Forms}}', ['n' => 2]), 'url' => ['/study-form/index']],            		
 		           	['label' => Yii::t('app', '{n, plural, =1{Semester} other{Semesters}}', ['n' => 2]), 'url' => ['/semester/index']],            		
 				]],
