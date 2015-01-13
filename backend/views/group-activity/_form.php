@@ -8,6 +8,7 @@ use common\models\ActivityType;
 use common\models\Course;
 use common\models\Instructor;
 use common\models\Semester;
+use common\models\GroupActivity;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GroupActivity */
@@ -15,6 +16,37 @@ use common\models\Semester;
 ?>
 
 <div class="group-activity-form">
+
+<?php
+$group_id = 1;
+$course_id = 3;
+
+    $actvityTypes = ActivityType::find()->orderBy(['id' => SORT_ASC])->all();
+
+    $groupActivities = GroupActivity::find()
+        ->where(['group_id' => $group_id, 'course_id' => $course_id])
+        ->all();
+
+    $groupActivities2 = [];
+    foreach($groupActivities as $ga)
+    {
+        if(!isset($groupActivities2[$ga->course_id]))
+            $groupActivities2[$ga->course_id] = ['course' => ['name' => $ga->course->name, 'id' => $ga->course->id]];
+        if(!isset($groupActivities2[$ga->course_id]['activities']))
+            $groupActivities2[$ga->course_id]['activities'] = [];            
+        if(!isset($groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id]))
+            $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id] = [];
+        $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->last_name . ' ' . $ga->instructor->first_name;
+    }
+
+?>
+
+Course name: <?= $groupActivities2[$course_id]['course']['name'] ?><br />
+<?= $actvityTypes[0]->name ?>: 
+<?= $actvityTypes[1]->name ?>: <br />
+<?= $actvityTypes[2]->name ?>: <br />
+
+<hr />
 
     <?php $form = ActiveForm::begin(); ?>
 
