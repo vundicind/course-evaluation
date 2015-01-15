@@ -50,4 +50,10 @@ class Instructor extends \yii\db\ActiveRecord
             'middle_name' => Yii::t('app', 'Middle Name'),
         ];
     }
+    
+    public function getFullname()
+    {
+    	return "wwwwww";
+    	//return $this->last_name . ' ' . $this->first_name; 
+    }
 }

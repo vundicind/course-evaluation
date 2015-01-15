@@ -139,13 +139,11 @@ $valid = Model::validateMultiple($modelsActivity) && $valid;
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($course_id, $group_id, $semester_id)
     {
-        $model = $this->findModel($id);
-
-$group_id = 1;$group=Group::findOne($group_id);
-$course_id = 3;$course=Course::findOne($course_id);
-$semester_id = 2;$semester=Semester::findOne($semester_id);
+$group=Group::findOne($group_id);
+$course=Course::findOne($course_id);
+$semester=Semester::findOne($semester_id);
 
 $modelsActivity = GroupActivity::find()->where(['course_id' => $course_id, 'group_id' => $group_id])->all();
 $model = $modelsActivity[0];

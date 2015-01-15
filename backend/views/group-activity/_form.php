@@ -10,6 +10,7 @@ use common\models\Instructor;
 use common\models\Semester;
 use common\models\GroupActivity;
 use wbraganca\dynamicform\DynamicFormWidget;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GroupActivity */
@@ -20,11 +21,32 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
-    <?= $form->field($group, 'id')->dropDownList(ArrayHelper::map(Group::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Group')]) ?>
+    <?= $form->field($group, 'id')->widget(Select2::classname(), [
+    'data' => array_merge(["" => ""], ArrayHelper::map(Group::find()->asArray()->all(), 'id', 'name')),
+    'options' => ['placeholder' => Yii::t('app', 'Select Group')],
+    'pluginOptions' => [
+        'allowClear' => false
+    ],
+]); ?>
 
-    <?= $form->field($course, 'id')->dropDownList(ArrayHelper::map(Course::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Course')]) ?>
+    <?= $form->field($course, 'id')->
+widget(Select2::classname(), [
+    'data' => array_merge(["" => ""], ArrayHelper::map(Course::find()->asArray()->all(), 'id', 'name')),
+    'options' => ['placeholder' => Yii::t('app', 'Select Course')],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]); ?>
 
-    <?= $form->field($semester, 'id')->dropDownList(ArrayHelper::map(Semester::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Semester')]) ?>
+    <?= $form->field($semester, 'id')->
+widget(Select2::classname(), [
+    'data' => array_merge(["" => ""], ArrayHelper::map(Semester::find()->asArray()->all(), 'id', 'name')),
+    'options' => ['placeholder' => Yii::t('app', 'Select Semester')],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]); ?>
+    
     
 <div class="panel panel-default">
         <div class="panel-heading"><h4><i class="glyphicon glyphicon-envelope"></i> Activities</h4></div>
@@ -40,7 +62,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     'subgroup',
                 ],
                 'options' => [
-                    'min' => 0,
+                    'min' => 1,
                     'limit' => 9, // the maximum times, an element can be cloned (default 999)
                 ]
             ]); ?> 
@@ -66,10 +88,24 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         
                         <div class="row">
                             <div class="col-sm-4">
-                                <?= $form->field($modelActivity, "[{$i}]activity_type_id")->dropDownList(ArrayHelper::map(ActivityType::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Activity Type')]) ?>
+                                <?= $form->field($modelActivity, "[{$i}]activity_type_id")->
+widget(Select2::classname(), [
+    'data' => array_merge(["" => ""], ArrayHelper::map(ActivityType::find()->asArray()->all(), 'id', 'name')),
+    'options' => ['placeholder' => Yii::t('app', 'Select Activity Type')],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]); ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($modelActivity, "[{$i}]instructor_id")->dropDownList(ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', function ($element) { return $element['first_name'] . ' ' . $element['last_name'];}), ['prompt' => Yii::t('app', 'Select Instructor')]) ?>
+                                <?= $form->field($modelActivity, "[{$i}]instructor_id")->
+widget(Select2::classname(), [
+    'data' => array_merge(["" => ""], ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', function($e) {return $e['last_name'] . ' ' . $e['first_name'];})),
+    'options' => ['placeholder' => Yii::t('app', 'Select Instructor')],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]); ?>
                             </div>
                             <div class="col-sm-4">
                                 <?= $form->field($modelActivity, "[{$i}]subgroup")->textInput() ?>

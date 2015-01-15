@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use common\models\GroupActivity;
 use common\models\ActivityType;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Group */
@@ -52,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach($groupActivities as $ga)
     {
         if(!isset($groupActivities2[$ga->course_id]))
-            $groupActivities2[$ga->course_id] = ['course' => ['name' => $ga->course->name, 'id' => $ga->course->id]];
+            $groupActivities2[$ga->course_id] = ['course' => ['name' => $ga->course->name, 'id' => $ga->course->id], 'group' => ['id' => $model->id], 'semester' => ['id' => 2]];
         if(!isset($groupActivities2[$ga->course_id]['activities']))
             $groupActivities2[$ga->course_id]['activities'] = [];            
         if(!isset($groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id]))
@@ -72,10 +73,34 @@ $dataProvider = new ArrayDataProvider([
     'dataProvider' => $dataProvider,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
+        
         ['attribute' => 'course', 'value' => 'course.name'],
-        ['attribute' => 'activity1', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][0]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][0]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
-        ['attribute' => 'activity2', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][1]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][1]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
-        ['attribute' => 'activity3', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][2]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][2]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
+        ['attribute' => 'Prelegeri', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][0]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][0]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
+        ['attribute' => 'Seminare', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][1]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][1]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
+        ['attribute' => 'Laborator', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][2]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][2]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
+        
+        [
+        	'class' => 'yii\grid\ActionColumn',
+        	'template' => '{update} {delete}',	
+        	'buttons' => [
+        		'update' => function ($url, $model, $key) {
+        				$url = Url::toRoute(['/group-activity/update', 'course_id' => $model['course']['id'], 'group_id' => $model['group']['id'], 'semester_id' => $model['semester']['id']]); 
+                		return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                    		'title' => Yii::t('yii', 'Update'),
+                    		'data-pjax' => '0',
+                		]);
+        			},
+        		'delete' => function ($url, $model, $key) {
+        				$url = Url::toRoute(['/group-activity/delete', 'course_id' => $model['course']['id'], 'group_id' => $model['group']['id'], 'semester_id' => $model['semester']['id']]);
+                		return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                    		'title' => Yii::t('yii', 'Delete'),
+                    		'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                    		'data-method' => 'post',
+                    		'data-pjax' => '0',
+                		]);
+        			} 			
+        	]	
+        ],
     ]
 ]);?>
     
