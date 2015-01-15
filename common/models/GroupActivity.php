@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\Group;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "group_activity".
