@@ -29,7 +29,7 @@ class Group extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'specialty_id', 'study_form_id'], 'required'],
-            [['name'], 'unique', 'attributes' => ['name', 'specialty_id']],
+            [['name'], 'unique', 'targetAttribute' => ['name', 'specialty_id']],
             [['name'], 'string', 'max' => 255],
             [['specialty_id', 'study_form_id'], 'integer'],
         ];
