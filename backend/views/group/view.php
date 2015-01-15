@@ -69,6 +69,11 @@ $dataProvider = new ArrayDataProvider([
     'allModels' => $groupActivities2,
     'pagination' => false,
 ]); ?>
+    <p>
+        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
+    'modelClass' => 'Group Activity',
+]), ['group-activity/create'], ['class' => 'btn btn-success']) ?>
+    </p>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [

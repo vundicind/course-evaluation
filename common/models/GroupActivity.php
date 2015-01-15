@@ -40,6 +40,7 @@ class GroupActivity extends \yii\db\ActiveRecord
     {
         return [
             [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id'], 'required'],
+        	[['instructor_id'], 'unique', 'targetAttribute' => ['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id']],        		
             [['group_id', 'activity_type_id', 'course_id', 'instructor_id', 'semester_id', 'subgroup'], 'integer']
         ];
     }
