@@ -13,6 +13,7 @@ use yii\base\Model;
 use common\models\Group;
 use common\models\Course;
 use common\models\Semester;
+use common\models\CourseClasses;
 
 /**
  * GroupActivityController implements the CRUD actions for GroupActivity model.
@@ -51,11 +52,11 @@ class GroupActivityController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($course_id, $group_id, $semester_id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        //return $this->render('view', [
+        //    'model' => $this->findModel($id),
+        //]);
     }
 
     /**
@@ -65,58 +66,56 @@ class GroupActivityController extends Controller
      */
     public function actionCreate()
     {
-        $model = new GroupActivity();
-        
-        $group = new Group;
-        $course = new Course;
-        $semester = new Semester;
-
-//        $modelsActivity = [GroupActivity::find()->where(['course_id' => 3, 'group_id' => 1])->one()];
-                        
+    	$model = new CourseClasses;
+    	$model->group_id = isset($_GET['group_id']) ? $_GET['group_id'] : null; 
+    	$model->semester_id = isset($_GET['semester_id']) ? $_GET['semester_id'] : null;
+    	
         $modelsActivity = [new GroupActivity];        
 
         if ($model->load(Yii::$app->request->post())) {
+			$modelsActivity = $this->createMultiple(GroupActivity::classname());
+			Model::loadMultiple($modelsActivity, Yii::$app->request->post());
 
-$modelsActivity = $this->createMultiple(GroupActivity::classname());
-Model::loadMultiple($modelsActivity, Yii::$app->request->post());
-        
+			foreach($modelsActivity as $modelActivity)
+			{
+				$modelActivity->course_id = $model->course_id;
+				$modelActivity->group_id = $model->group_id;
+				$modelActivity->semester_id = $model->semester_id;
+			}
+				
+			if (Yii::$app->request->isAjax) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ArrayHelper::merge(
+						ActiveForm::validateMultiple($modelsActivity),
+						ActiveForm::validate($model)
+				);				
+			}
 
-if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validateMultiple($modelsActivity);
-}
-foreach($modelsActivity as $modelActivity)
-{
-$modelActivity->course_id=$course_id;
-$modelActivity->group_id=$group_id;
-$modelActivity->semester_id=$semester_id;
-}        
-
-// validate all models
-$valid = $model->validate();
-
-$valid = Model::validateMultiple($modelsActivity) && $valid;
+			// validate all models
+			$valid = $model->validate();
+			$valid = Model::validateMultiple($modelsActivity) && $valid;
 
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
-                    if ($flag = $model->save(false)) {
+                	$flag = true;
+                    //if ($flag = $model->save(false)) {
                         if (! empty($deletedIDs)) {
                             GroupActivity::deleteAll(['id' => $deletedIDs]);
                         }
                         foreach ($modelsActivity as $modelActivity) {
-                            $modelActivity->course_id = $course_id;
-                            $modelActivity->group_id = $group_id;
-                            $modelActivity->semester_id = $semester_id;                            
+                            $modelActivity->course_id = $model->course_id;
+                            $modelActivity->group_id = $model->group_id;
+                            $modelActivity->semester_id = $model->semester_id;                            
                             if (! ($flag = $modelActivity->save(false))) {
                                 $transaction->rollBack();
                                 break;
                             }
                         }
-                    }
+                    //}
                     if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['group/view', 'id' => $model->group_id]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
@@ -124,11 +123,11 @@ $valid = Model::validateMultiple($modelsActivity) && $valid;
             }
 
         
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['group/view', 'id' => $model->group_id]);
         } else {
             return $this->render('create', [
-                'model' => $model, 'modelsActivity' => (empty($modelsActivity)) ? [new GroupActivity] : $modelsActivity,
-                'group' => $group, 'course' => $course, 'semester' => $semester,
+                'model' => $model, 
+            	'modelsActivity' => (empty($modelsActivity)) ? [new GroupActivity] : $modelsActivity,
             ]);
         }
     }
@@ -141,46 +140,49 @@ $valid = Model::validateMultiple($modelsActivity) && $valid;
      */
     public function actionUpdate($course_id, $group_id, $semester_id)
     {
-$group=Group::findOne($group_id);
-$course=Course::findOne($course_id);
-$semester=Semester::findOne($semester_id);
-
-$modelsActivity = GroupActivity::find()->where(['course_id' => $course_id, 'group_id' => $group_id])->all();
-$model = $modelsActivity[0];
+    	
+    	$model = new CourseClasses;
+    	$model->group_id = $group_id;
+    	$model->course_id = $course_id;
+    	$model->semester_id = $semester_id;
+    	
+		$modelsActivity = GroupActivity::find()->where(['course_id' => $course_id, 'group_id' => $group_id, 'semester_id' => $semester_id])->all();
 
         if ($model->load(Yii::$app->request->post())) {
-$oldIDs = ArrayHelper::map($modelsActivity, 'id', 'id');        
-//$modelsActivity = Model::createMultiple(GroupActivity::classname(), $modelsActivity);
-$modelsActivity = $this->createMultiple(GroupActivity::classname(), $modelsActivity);
+			$oldIDs = ArrayHelper::map($modelsActivity, 'id', 'id');        
+			$modelsActivity = $this->createMultiple(GroupActivity::classname(), $modelsActivity);
+			Model::loadMultiple($modelsActivity, Yii::$app->request->post());
+			$deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsActivity, 'id', 'id')));
 
-Model::loadMultiple($modelsActivity, Yii::$app->request->post());
-$deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsActivity, 'id', 'id')));
-
-// ajax validation
-if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validateMultiple($modelsActivity);
-}
-foreach($modelsActivity as $modelActivity)
-{
-$modelActivity->course_id=$course_id;
-$modelActivity->group_id=$group_id;
-$modelActivity->semester_id=$semester_id;
-}        
-
-// validate all models
-$valid = $model->validate();
-
-$valid = Model::validateMultiple($modelsActivity) && $valid;
-//foreach($modelsActivity as $modelActivity) print_r($modelActivity->errors);
+			foreach($modelsActivity as $modelActivity)
+			{
+				$modelActivity->course_id=$model->course_id;
+				$modelActivity->group_id=$model->group_id;
+				$modelActivity->semester_id=$model->semester_id;
+			}
+				
+			// ajax validation
+			if (Yii::$app->request->isAjax) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ArrayHelper::merge(
+						ActiveForm::validateMultiple($modelsActivity),
+						ActiveForm::validate($model)
+				);				
+			}
+			
+			// validate all models
+			$valid = $model->validate();
+			$valid = Model::validateMultiple($modelsActivity) && $valid;
+			//foreach($modelsActivity as $modelActivity) print_r($modelActivity->errors);
 
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
-                    if ($flag = $model->save(false)) {
-                        if (! empty($deletedIDs)) {
-                            GroupActivity::deleteAll(['id' => $deletedIDs]);
-                        }
+                	$flag = true;
+                    //if ($flag = $model->save(false)) {
+                    //    if (! empty($deletedIDs)) {
+                    //        GroupActivity::deleteAll(['id' => $deletedIDs]);
+                    //    }
                         foreach ($modelsActivity as $modelActivity) {
                             $modelActivity->course_id = $course_id;
                             $modelActivity->group_id = $group_id;
@@ -190,10 +192,10 @@ $valid = Model::validateMultiple($modelsActivity) && $valid;
                                 break;
                             }
                         }
-                    }
+                    //}
                     if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['group/view', 'id' => $model->group_id]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
@@ -201,11 +203,11 @@ $valid = Model::validateMultiple($modelsActivity) && $valid;
             }
 
                     
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['group/view', 'id' => $model->group_id]);
         } else {
             return $this->render('update', [
-                'model' => $model, 'modelsActivity' => (empty($modelsActivity)) ? [new GroupActivity] : $modelsActivity,
-                'group' => $group, 'course' => $course, 'semester' => $semester,
+                'model' => $model,
+            	'modelsActivity' => (empty($modelsActivity)) ? [new GroupActivity] : $modelsActivity,
             ]);
         }
     }

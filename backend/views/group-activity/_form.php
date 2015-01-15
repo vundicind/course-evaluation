@@ -11,6 +11,7 @@ use common\models\Semester;
 use common\models\GroupActivity;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\widgets\Select2;
+use kartik\checkbox\CheckboxX;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GroupActivity */
@@ -21,34 +22,20 @@ use kartik\widgets\Select2;
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
-    <?= $form->field($group, 'id')->widget(Select2::classname(), [
-    'data' => array_merge(["" => ""], ArrayHelper::map(Group::find()->asArray()->all(), 'id', 'name')),
-    'options' => ['placeholder' => Yii::t('app', 'Select Group')],
-    'pluginOptions' => [
-        'allowClear' => false
-    ],
-]); ?>
+    <?= $form->field($model, 'group_id')->widget(Select2::classname(), [
+    	'data' => ArrayHelper::map(Group::find()->asArray()->all(), 'id', 'name'),
+    	'options' => ['placeholder' => Yii::t('app', 'Select Group')],
+	]) ?>
 
-    <?= $form->field($course, 'id')->
-widget(Select2::classname(), [
-    'data' => array_merge(["" => ""], ArrayHelper::map(Course::find()->asArray()->all(), 'id', 'name')),
-    'options' => ['placeholder' => Yii::t('app', 'Select Course')],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]); ?>
+    <?= $form->field($model, 'course_id')->widget(Select2::classname(), [
+    	'data' => ArrayHelper::map(Course::find()->asArray()->all(), 'id', 'name'),
+    	'options' => ['placeholder' => Yii::t('app', 'Select Course')],
+	]) ?>
 
-    <?= $form->field($semester, 'id')->
-widget(Select2::classname(), [
-    'data' => array_merge(["" => ""], ArrayHelper::map(Semester::find()->asArray()->all(), 'id', 'name')),
-    'options' => ['placeholder' => Yii::t('app', 'Select Semester')],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]); ?>
+    <?= $form->field($model, 'semester_id')->dropDownList(ArrayHelper::map(Semester::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Semester')]) ?>
     
     
-<div class="panel panel-default">
+	<div class="panel panel-default">
         <div class="panel-heading"><h4><i class="glyphicon glyphicon-envelope"></i> Activities</h4></div>
         <div class="panel-body">
             <?php DynamicFormWidget::begin([
@@ -63,7 +50,6 @@ widget(Select2::classname(), [
                 ],
                 'options' => [
                     'min' => 1,
-                    'limit' => 9, // the maximum times, an element can be cloned (default 999)
                 ]
             ]); ?> 
 
@@ -88,27 +74,16 @@ widget(Select2::classname(), [
                         
                         <div class="row">
                             <div class="col-sm-4">
-                                <?= $form->field($modelActivity, "[{$i}]activity_type_id")->
-widget(Select2::classname(), [
-    'data' => array_merge(["" => ""], ArrayHelper::map(ActivityType::find()->asArray()->all(), 'id', 'name')),
-    'options' => ['placeholder' => Yii::t('app', 'Select Activity Type')],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]); ?>
+	                            <?= $form->field($modelActivity, "[{$i}]activity_type_id")->dropDownList(ArrayHelper::map(ActivityType::find()->asArray()->all(), 'id', 'name'), ['prompt' => Yii::t('app', 'Select Activity Type')]) ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($modelActivity, "[{$i}]instructor_id")->
-widget(Select2::classname(), [
-    'data' => array_merge(["" => ""], ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', function($e) {return $e['last_name'] . ' ' . $e['first_name'];})),
-    'options' => ['placeholder' => Yii::t('app', 'Select Instructor')],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]); ?>
+                                <?= $form->field($modelActivity, "[{$i}]instructor_id")->widget(Select2::classname(), [
+    								'data' => ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', function($e) {return $e['last_name'] . ' ' . $e['first_name'];}),
+								    'options' => ['placeholder' => Yii::t('app', 'Select Instructor')],
+								]); ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($modelActivity, "[{$i}]subgroup")->textInput() ?>
+                                <?= $form->field($modelActivity, "[{$i}]subgroup")->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState'=>false]]); ?>
                             </div>
                         </div><!-- .row -->
                     </div>
@@ -120,7 +95,7 @@ widget(Select2::classname(), [
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($modelsActivity[0]->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
