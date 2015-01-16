@@ -78,8 +78,7 @@ use kartik\checkbox\CheckboxX;
                             </div>
                             <div class="col-sm-4">
                                 <?= $form->field($modelActivity, "[{$i}]instructor_id")->widget(Select2::classname(), [
-    								'data' => ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', function($e) {return $e['last_name'] . ' ' . $e['first_name'] . ((empty($e['middle_name']))?'':' '.$e['middle_name']);}),
-//                                		'data' => ArrayHelper::map(Instructor::find()->asArray()->all(), 'id', 'full_name'),
+                                	'data' => ArrayHelper::map(Instructor::find()->all(), 'id', 'full_name'),
 								    'options' => ['placeholder' => Yii::t('app', 'Select Instructor')],
 								]); ?>
                             </div>
