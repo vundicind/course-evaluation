@@ -53,16 +53,19 @@ $this->params['breadcrumbs'][] = $this->title;
         
         ['attribute' => 'course', 'value' => 'course.name'],
         [
-        		'attribute' => $activityTypes[0]->name, 
-        		'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['activityTypes'][0]->id])) return NULL;foreach($model['activities'][$GLOBALS['activityTypes'][0]->id] as $ii=>$in) $s.=$in.'; '; return $s;}
+        		'attribute' => $activityTypes[0]->name,
+        		'format' => 'html',
+        		'value' => function($model) use ($activityTypes) {$s='';if(!isset($model['activities'][$activityTypes[0]->id])) return NULL;foreach($model['activities'][$activityTypes[0]->id] as $ii=>$in) $s.=$in.'<br />'; return $s;}
         ],
         [
-        		'attribute' => $activityTypes[1]->name, 
-        		'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['activityTypes'][1]->id])) return NULL;foreach($model['activities'][$GLOBALS['activityTypes'][1]->id] as $ii=>$in) $s.=$in.'; '; return $s;}
+        		'attribute' => $activityTypes[1]->name,
+        		'format' => 'html',
+        		'value' => function($model) use ($activityTypes) {$s='';if(!isset($model['activities'][$activityTypes[1]->id])) return NULL;foreach($model['activities'][$activityTypes[1]->id] as $ii=>$in) $s.=$in.'<br />'; return $s;}
         ],
         [
         		'attribute' => $activityTypes[2]->name, 
-        		'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['activityTypes'][2]->id])) return NULL;foreach($model['activities'][$GLOBALS['activityTypes'][2]->id] as $ii=>$in) $s.=$in.'; '; return $s;}
+        		'format' => 'html',
+        		'value' => function($model) use ($activityTypes) {$s='';if(!isset($model['activities'][$activityTypes[2]->id])) return NULL;foreach($model['activities'][$activityTypes[2]->id] as $ii=>$in) $s.=$in.'<br />'; return $s;}
         ],
         
         [

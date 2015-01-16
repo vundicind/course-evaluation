@@ -59,9 +59,9 @@ class GroupController extends Controller
     	$activityTypes = ActivityType::find()->orderBy(['id' => SORT_ASC])->all();    	
     	
     	$groupActivities = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
-    		->joinWith(['course'])
+    		->joinWith(['course', 'instructor'])
     		->where(['group_id' => $model->id, 'semester_id' => $semester_id])
-    		->orderBy(['course.name' => SORT_ASC,])
+    		->orderBy(['course.name' => SORT_ASC, 'instructor.last_name' => SORT_ASC, 'instructor.first_name' => SORT_ASC])
     		->all();
     	 
 		$groupCourses = [];

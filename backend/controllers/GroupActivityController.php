@@ -144,8 +144,9 @@ class GroupActivityController extends Controller
     	$model->semester_id = $semester_id;
     	
 		$modelsActivity = GroupActivity::find()
+			->joinWith(['instructor'])
 			->where(['course_id' => $course_id, 'group_id' => $group_id, 'semester_id' => $semester_id])
-			->orderBy(['activity_type_id' => SORT_ASC])
+			->orderBy(['activity_type_id' => SORT_ASC, 'instructor.last_name' => SORT_ASC, 'instructor.first_name' => SORT_ASC])
 			->all();
 
         if ($model->load(Yii::$app->request->post())) {
