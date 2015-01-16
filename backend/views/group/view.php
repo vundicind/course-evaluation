@@ -72,7 +72,7 @@ $dataProvider = new ArrayDataProvider([
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
     'modelClass' => 'Group Activity',
-]), ['group-activity/create'], ['class' => 'btn btn-success']) ?>
+]), ['group-activity/create', 'group_id' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
