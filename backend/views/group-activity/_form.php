@@ -84,7 +84,7 @@ use kartik\checkbox\CheckboxX;
 								]); ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($modelActivity, "[{$i}]subgroup")->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState'=>false]]); ?>
+                                <?= $form->field($modelActivity, "[{$i}]subgroup")->checkbox(); ?>
                             </div>
                         </div><!-- .row -->
                     </div>
