@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $groupActivities2[$ga->course_id]['activities'] = [];            
         if(!isset($groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id]))
             $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id] = [];
-        $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->last_name . ' ' . $ga->instructor->first_name;
+        $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->last_name . ' ' . $ga->instructor->first_name.(($ga->subgroup==1)?'(sub)':'');
     }
 ?>
 
