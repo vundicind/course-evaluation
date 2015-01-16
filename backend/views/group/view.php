@@ -36,8 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'specialty.name',
-            'studyForm.name',
+            ['label' => Yii::t('app', 'Specialty'), 'value' => $model->specialty->name],            
+            ['label' => Yii::t('app', 'Study form'), 'value' => $model->studyForm->name],
         ],
     ]) ?>
 
