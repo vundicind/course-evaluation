@@ -50,6 +50,7 @@ class SpecialtySearch extends Specialty
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['name'=>SORT_ASC]],
         ]);
         
         $dataProvider->sort->attributes['faculty'] = [

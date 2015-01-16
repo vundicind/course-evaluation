@@ -50,18 +50,16 @@ class GroupSearch extends Group
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['name'=>SORT_ASC]],            
         ]);
         
-        $dataProvider->sort->attributes = [
-            'name',
-            'specialty' => [
-                'asc' => ['specialty.name' => SORT_ASC],
-                'desc' => ['specialty.name' => SORT_DESC],
-            ],
-            'studyForm' => [
-                'asc' => ['studyForm.name' => SORT_ASC],
-                'desc' => ['studyForm.name' => SORT_DESC],
-            ],
+        $dataProvider->sort->attributes['specialty'] = [
+            'asc' => ['specialty.name' => SORT_ASC],
+            'desc' => ['specialty.name' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['studyForm'] = [
+            'asc' => ['studyForm.name' => SORT_ASC],
+            'desc' => ['studyForm.name' => SORT_DESC],
         ];
 
         if (!($this->load($params) && $this->validate())) {

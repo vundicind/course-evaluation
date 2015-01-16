@@ -45,6 +45,7 @@ class CourseSearch extends Course
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['name'=>SORT_ASC]],            
         ]);
 
         if (!($this->load($params) && $this->validate())) {

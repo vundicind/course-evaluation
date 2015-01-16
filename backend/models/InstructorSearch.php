@@ -45,6 +45,7 @@ class InstructorSearch extends Instructor
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['last_name'=>SORT_ASC, 'first_name'=>SORT_ASC]],            
         ]);
 
         if (!($this->load($params) && $this->validate())) {
