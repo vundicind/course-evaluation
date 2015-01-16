@@ -8,6 +8,7 @@ use common\models\StudyForm;
 use common\models\Specialty;
 use common\models\Group;
 use common\models\GroupActivity;
+use common\models\ActivityType;
 
 class SurveyController extends \yii\web\Controller
 {
@@ -42,4 +43,44 @@ class SurveyController extends \yii\web\Controller
 
         return $this->render('index', ['items' => $items]);
     }
+    
+    public function actionSurvey($group_id)
+    {
+        $semester_id = 1;//!!!
+    	$activityTypes = ActivityType::find()->orderBy(['id' => SORT_ASC])->all();    	
+    	
+    	$groupActivities = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
+    		->joinWith(['course', 'instructor'])
+    		->where(['group_id' => $group_id, 'semester_id' => $semester_id])
+    		->orderBy(['course.name' => SORT_ASC, 'instructor.last_name' => SORT_ASC, 'instructor.first_name' => SORT_ASC])
+    		->all();
+    	 
+		$groupCourses = [];
+		foreach($groupActivities as $ga)
+		{
+			if(!isset($groupCourses[$ga->course_id]))
+				$groupCourses[$ga->course_id] = [
+						'course' => [
+								'name' => $ga->course->name,
+								'id' => $ga->course->id
+						],
+						'group' => [
+								'id' => $group_id
+						],
+						'semester' => [
+								'id' => $semester_id
+						],
+				];
+				
+			if(!isset($groupCourses[$ga->course_id]['activities']))
+				$groupCourses[$ga->course_id]['activities'] = [];
+				
+			if(!isset($groupCourses[$ga->course_id]['activities'][$ga->activity_type_id]))
+				$groupCourses[$ga->course_id]['activities'][$ga->activity_type_id] = [];
+				
+			$groupCourses[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->full_name;
+		}
+		
+		return $this->render('survey', ['groupCourses' => $groupCourses]);
+    }        
 }
