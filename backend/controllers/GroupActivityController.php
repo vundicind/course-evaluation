@@ -218,11 +218,22 @@ class GroupActivityController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($course_id, $group_id, $semester_id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();//-RD
+        $modelsActivity = GroupActivity::find()->where(['course_id' => $course_id, 'group_id' => $group_id, 'semester_id' => $semester_id])->all();
+        $transaction = \Yii::$app->db->beginTransaction();
+        try {
+            foreach($modelsActivity as $modelActivity) 
+            {
+                $modelActivity->delete();
+            }
+            $transaction->commit();
+        } catch (Exception $e) {
+            $transaction->rollBack(); 
+        }    
 
-        return $this->redirect(['index']);
+        $this->redirect(['group/view', 'id' => $group_id]);       
     }
 
     /**
