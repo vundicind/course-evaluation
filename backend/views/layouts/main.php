@@ -51,7 +51,7 @@ AppAsset::register($this);
 				]],
 				['label' => Yii::t('app', 'Data3'), 'items' => [
 		            ['label' => Yii::t('app', '{n, plural, =1{Group} other{Groups}}', ['n' => 2]), 'url' => ['/group/index']],
-		            ['label' => Yii::t('app', '{n, plural, =1{Group Activity} other{Groups Activities}}', ['n' => 2]), 'url' => ['/group-activity/index']],
+//		            ['label' => Yii::t('app', '{n, plural, =1{Group Activity} other{Groups Activities}}', ['n' => 2]), 'url' => ['/group-activity/index']],
 				]],
             ];
             if (Yii::$app->user->isGuest) {
