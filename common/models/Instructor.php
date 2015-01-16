@@ -51,9 +51,11 @@ class Instructor extends \yii\db\ActiveRecord
         ];
     }
     
-    public function getFullname()
+    public function getFull_name()
     {
-    	return "wwwwww";
-    	//return $this->last_name . ' ' . $this->first_name; 
+    	if(empty($this->middle_name))
+    		return $this->last_name . ' ' . $this->first_name;
+    	else
+    		return $this->last_name . ' ' . $this->first_name . ' ' . $this->middle_name;
     }
 }
