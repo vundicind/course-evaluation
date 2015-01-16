@@ -143,7 +143,10 @@ class GroupActivityController extends Controller
     	$model->course_id = $course_id;
     	$model->semester_id = $semester_id;
     	
-		$modelsActivity = GroupActivity::find()->where(['course_id' => $course_id, 'group_id' => $group_id, 'semester_id' => $semester_id])->all();
+		$modelsActivity = GroupActivity::find()
+			->where(['course_id' => $course_id, 'group_id' => $group_id, 'semester_id' => $semester_id])
+			->orderBy(['activity_type_id' => SORT_ASC])
+			->all();
 
         if ($model->load(Yii::$app->request->post())) {
 			$oldIDs = ArrayHelper::map($modelsActivity, 'id', 'id');        
@@ -177,9 +180,9 @@ class GroupActivityController extends Controller
                 try {
                 	$flag = true;
                     //if ($flag = $model->save(false)) {
-                    //    if (! empty($deletedIDs)) {
-                    //        GroupActivity::deleteAll(['id' => $deletedIDs]);
-                    //    }
+                        if (! empty($deletedIDs)) {
+                            GroupActivity::deleteAll(['id' => $deletedIDs]);
+                        }
                         foreach ($modelsActivity as $modelActivity) {
                             if (! ($flag = $modelActivity->save(false))) {
                                 $transaction->rollBack();
