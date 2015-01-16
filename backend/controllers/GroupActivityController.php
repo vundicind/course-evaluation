@@ -104,9 +104,6 @@ class GroupActivityController extends Controller
                             GroupActivity::deleteAll(['id' => $deletedIDs]);
                         }
                         foreach ($modelsActivity as $modelActivity) {
-                            $modelActivity->course_id = $model->course_id;
-                            $modelActivity->group_id = $model->group_id;
-                            $modelActivity->semester_id = $model->semester_id;                            
                             if (! ($flag = $modelActivity->save(false))) {
                                 $transaction->rollBack();
                                 break;
@@ -184,9 +181,6 @@ class GroupActivityController extends Controller
                     //        GroupActivity::deleteAll(['id' => $deletedIDs]);
                     //    }
                         foreach ($modelsActivity as $modelActivity) {
-                            $modelActivity->course_id = $course_id;
-                            $modelActivity->group_id = $group_id;
-                            $modelActivity->semester_id = $semester_id;                            
                             if (! ($flag = $modelActivity->save(false))) {
                                 $transaction->rollBack();
                                 break;
