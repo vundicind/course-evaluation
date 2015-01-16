@@ -3,10 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
-use yii\data\ArrayDataProvider;
-use common\models\GroupActivity;
-use common\models\ActivityType;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -15,8 +11,8 @@ use yii\helpers\Url;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$semester_id = 1;
 ?>
+
 <div class="group-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -41,49 +37,33 @@ $semester_id = 1;
             ['label' => Yii::t('app', 'Study form'), 'value' => $model->studyForm->name],
         ],
     ]) ?>
-
-<?php
-    $GLOBALS['actvityTypes'] = ActivityType::find()->orderBy(['id' => SORT_ASC])->all();
-    $groupActivities = GroupActivity::find()
-        ->joinWith(['course'])
-        ->where(['group_id' => $model->id])
-        ->orderBy(['course.name' => SORT_ASC,])
-        ->all();
-
-    $groupActivities2 = [];
-    foreach($groupActivities as $ga)
-    {
-        if(!isset($groupActivities2[$ga->course_id]))
-            $groupActivities2[$ga->course_id] = ['course' => ['name' => $ga->course->name, 'id' => $ga->course->id], 'group' => ['id' => $model->id], 'semester' => ['id' => $semester_id]];
-        if(!isset($groupActivities2[$ga->course_id]['activities']))
-            $groupActivities2[$ga->course_id]['activities'] = [];            
-        if(!isset($groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id]))
-            $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id] = [];
-        $groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->last_name . ' ' . $ga->instructor->first_name.(($ga->subgroup==1)?'(sub)':'');
-    }
-?>
-
-
-
-<?php
-$dataProvider = new ArrayDataProvider([
-    'allModels' => $groupActivities2,
-    'pagination' => false,
-]); ?>
+    
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
     'modelClass' => 'Group Activity',
 ]), ['group-activity/create', 'group_id' => $model->id, 'semester_id' => $semester_id], ['class' => 'btn btn-success']) ?>
     </p>
+<?php 
+	$GLOBALS['activityTypes'] = $activityTypes;//!!! 
+?>    
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         
         ['attribute' => 'course', 'value' => 'course.name'],
-        ['attribute' => 'Prelegeri', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][0]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][0]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
-        ['attribute' => 'Seminare', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][1]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][1]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
-        ['attribute' => 'Laborator', 'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['actvityTypes'][2]->id])) return NULL;foreach($model['activities'][$GLOBALS['actvityTypes'][2]->id] as $ii=>$in) $s.=$in.';'; return $s;}],
+        [
+        		'attribute' => $activityTypes[0]->name, 
+        		'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['activityTypes'][0]->id])) return NULL;foreach($model['activities'][$GLOBALS['activityTypes'][0]->id] as $ii=>$in) $s.=$in.'; '; return $s;}
+        ],
+        [
+        		'attribute' => $activityTypes[1]->name, 
+        		'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['activityTypes'][1]->id])) return NULL;foreach($model['activities'][$GLOBALS['activityTypes'][1]->id] as $ii=>$in) $s.=$in.'; '; return $s;}
+        ],
+        [
+        		'attribute' => $activityTypes[2]->name, 
+        		'value' => function($model) {$s='';if(!isset($model['activities'][$GLOBALS['activityTypes'][2]->id])) return NULL;foreach($model['activities'][$GLOBALS['activityTypes'][2]->id] as $ii=>$in) $s.=$in.'; '; return $s;}
+        ],
         
         [
         	'class' => 'yii\grid\ActionColumn',
