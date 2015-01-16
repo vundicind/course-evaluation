@@ -15,6 +15,7 @@ use yii\helpers\Url;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$semester_id = 1;
 ?>
 <div class="group-view">
 
@@ -53,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach($groupActivities as $ga)
     {
         if(!isset($groupActivities2[$ga->course_id]))
-            $groupActivities2[$ga->course_id] = ['course' => ['name' => $ga->course->name, 'id' => $ga->course->id], 'group' => ['id' => $model->id], 'semester' => ['id' => 2]];
+            $groupActivities2[$ga->course_id] = ['course' => ['name' => $ga->course->name, 'id' => $ga->course->id], 'group' => ['id' => $model->id], 'semester' => ['id' => $semester_id]];
         if(!isset($groupActivities2[$ga->course_id]['activities']))
             $groupActivities2[$ga->course_id]['activities'] = [];            
         if(!isset($groupActivities2[$ga->course_id]['activities'][$ga->activity_type_id]))
@@ -72,7 +73,7 @@ $dataProvider = new ArrayDataProvider([
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
     'modelClass' => 'Group Activity',
-]), ['group-activity/create', 'group_id' => $model->id], ['class' => 'btn btn-success']) ?>
+]), ['group-activity/create', 'group_id' => $model->id, 'semester_id' => $semester_id], ['class' => 'btn btn-success']) ?>
     </p>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
