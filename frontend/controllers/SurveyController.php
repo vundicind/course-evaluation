@@ -13,44 +13,33 @@ class SurveyController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-    	if(!empty($_GET['f']) && empty($_GET['sc']))
-    	{
-    		$studyCycles = StudyCycle::find()->all();
-    		return $this->render('index', ['studyCycles' => $studyCycles, 'f' => $_GET['f']]);
-    	}
+        $items = [];
+        
+        $groups = Group::find()
+            ->joinWith(['specialty'])
+            ->orderBy(['specialty.faculty_id' => SORT_ASC, 'specialty_id' => SORT_ASC, 'name' => SORT_ASC])
+            ->all();    
+            
+        $i = null; $iid = null;
+        $j = null; $jid = null;   
+        foreach($groups as $group)
+        {
+            if($i === null || ($iid !== null && $iid !== $group->specialty->faculty_id))
+            {
+                $items[] = ['label' => $group->specialty->faculty->name, 'items' => []];
+                $i = ($i === null) ? 0 : $i+1; $iid = $group->specialty->faculty_id;
+                $j = null;
+            }    
 
-    	if(!empty($_GET['sc']) && empty($_GET['sf']))
-    	{
-    		$studyForms = StudyForm::find()->all();
-    		return $this->render('index', ['studyForms' => $studyForms, 'f' => $_GET['f'], 'sc' => $_GET['sc']]);
-    	}
-    	
-    	if(!empty($_GET['sf']))
-    	{
-    		$specialties = Specialty::find()
-    			->andFilterWhere(['faculty_id' => $_GET['f']])
-    			->andFilterWhere(['study_cycle_id' => $_GET['sc']])
-    			->all();
-    		return $this->render('index', ['specialties' => $specialties]);
-    	}
+            if($j === null || ($jid !== null && $jid !== $group->specialty_id))
+            {
+                $items[$i]['items'][] = ['label' => $group->specialty->name, 'items' => []];
+                $j = ($j === null) ? 0 : $j+1; $jid = $group->specialty_id;
+            }    
+                 
+            $items[$i]['items'][$j]['items'][] = ['label' => $group->name, 'url' => ['survey/survey', 'group_id' => $group->id]];
+        }    
 
-    	if(!empty($_GET['s']))
-    	{
-    		$groups = Group::find()
-    		->andFilterWhere(['specialty_id' => $_GET['s']])
-    		->all();
-    		return $this->render('index', ['groups' => $groups]);
-    	}
-    	
-    	if(!empty($_GET['g']))
-    	{
-    		$groupActivities = GroupActivity::find()
-    		->andFilterWhere(['group_id' => $_GET['g']])
-    		->all();
-    		return $this->render('index', ['groupActivities' => $groupActivities]);
-    	}
-    	 
-        $faculties = Faculty::find()->all();
-        return $this->render('index', ['faculties' => $faculties]);
+        return $this->render('index', ['items' => $items]);
     }
 }
