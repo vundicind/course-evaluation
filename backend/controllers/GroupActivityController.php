@@ -13,7 +13,7 @@ use yii\base\Model;
 use common\models\Group;
 use common\models\Course;
 use common\models\Semester;
-use common\models\CourseClasses;
+use common\models\CourseGroup;
 
 /**
  * GroupActivityController implements the CRUD actions for GroupActivity model.
@@ -66,7 +66,7 @@ class GroupActivityController extends Controller
      */
     public function actionCreate()
     {
-    	$model = new CourseClasses;
+    	$model = new CourseGroup;
     	$model->group_id = isset($_GET['group_id']) ? $_GET['group_id'] : null; 
     	$model->semester_id = isset($_GET['semester_id']) ? $_GET['semester_id'] : null;
     	
@@ -138,7 +138,7 @@ class GroupActivityController extends Controller
     public function actionUpdate($course_id, $group_id, $semester_id)
     {
     	
-    	$model = new CourseClasses;
+    	$model = new CourseGroup;
     	$model->group_id = $group_id;
     	$model->course_id = $course_id;
     	$model->semester_id = $semester_id;

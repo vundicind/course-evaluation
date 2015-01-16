@@ -9,7 +9,7 @@ use common\models\GroupActivity;
 /**
  * CourseClasses represents the model which aggreagates all `app\models\GroupActivity` for a group, course and semester.
  */
-class CourseClasses extends GroupActivity
+class CourseGroup extends GroupActivity
 {
 	public $classes = [];
 	
