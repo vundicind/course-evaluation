@@ -14,7 +14,7 @@ class SurveyController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        \Yii::$app->session->set('survey.groupCourses', null);   
+        \Yii::$app->session->set('survey.groupActivities', null);
     
         $items = [];
         
@@ -50,14 +50,16 @@ class SurveyController extends \yii\web\Controller
     {
         $semester_id = 1;//!!!
         
-        $groupCourses = \Yii::$app->session->get('survey.groupCourses');
-        $course_id = \Yii::$app->session->get('survey.course_id');
-        $instructor_id = \Yii::$app->session->get('survey.instructor_id');
-        $activity_id = \Yii::$app->session->get('survey.activity_id');                        
-$gc = [];
-        if($groupCourses == null)
+        $groupActivities = \Yii::$app->session->get('survey.groupActivities');
+        $groupActivitiesIndex = \Yii::$app->session->get('survey.groupActivitiesIndex');
+
+        if($groupActivities == null)
     	{
-        	$groupActivities = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
+    	    $groupActivitiesIndex = null;
+    	    
+    	    $p = ActivityType::find()->orderBy(['id' => SORT_ASC])->one()->id;
+
+            $groupActivities = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
         		->joinWith(['course', 'instructor'])
         		->where(['group_id' => $group_id, 'semester_id' => $semester_id])
         		->orderBy(['course.name' => SORT_ASC, 'instructor.last_name' => SORT_ASC, 'instructor.first_name' => SORT_ASC])
@@ -90,22 +92,73 @@ $gc = [];
         			    'activities' => [],
         			];
         			
-                $groupCourses[$ga->course_id]['instructors'][$ga->instructor_id]['activities'][$ga->id] = [
+                $groupCourses[$ga->course_id]['instructors'][$ga->instructor_id]['activities'][$ga->activity_type_id] = [
                     'activity' => [
                         'id' => $ga->id,
+                        'activity_type_id' => $ga->activity_type_id,                        
                         'name' => $ga->activityType->name,
                         'subgroup' => $ga->subgroup,
                     ],
                 ];
 		    }
 		    
+		    $groupActivities = [];
+            foreach($groupCourses as $course)
+            {
+                foreach($course['instructors'] as $iid => $instructor)
+                {
+                    if(count($instructor['activities']) >= 2)
+                    {
+                        if(array_key_exists($p, $instructor['activities']))
+                        {
+                            $groupActivities[] = [
+                                'course_id' => $course['course']['id'],
+                                'group_id' => $group_id,
+                                'instructor_id' => $instructor['instructor']['id'],
+                                'activity_type_id' => 0,
+                                'subgroup' => false,
+                            ];
+                            continue;
+                        }
+                    }    
+            
+                    foreach($instructor['activities'] as $aid => $activity)
+                    {
+                            $groupActivities[] = [
+                                'course_id' => $course['course']['id'],
+                                'group_id' => $group_id,
+                                'instructor_id' => $instructor['instructor']['id'],
+                                'activity_type_id' => $activity['activity']['activity_type_id'],
+                                'subgroup' => $activity['activity']['subgroup'],                                
+                            ];
+                    }
+                }        
+            }		    
+		
+		    \Yii::$app->session->set('survey.groupActivities', $groupActivities);    
         }
+        
+        if($groupActivitiesIndex === null)
+            $groupActivitiesIndex = 0;
+        else    
+            $groupActivitiesIndex++;
+            
+        if($groupActivitiesIndex >= count($groupActivities))
+            die('Gata testul');    
  
+        $course = \common\models\Course::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['course_id']])->one();
+        $instructor = \common\models\Instructor::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['instructor_id']])->one();
+        $activityType = \common\models\ActivityType::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['activity_type_id']])->one();
+
 		return $this->render('survey', [
-		    'groupCourses' => $groupCourses, 
-		    'course' => $course_id, 
-		    'instructor_id' => $instructor_id, 
-		    'activity_id' => $activity_id
+		    'courseId' => $course->id,		
+		    'courseName' => $course->name,
+		    'instructorId' => $instructor->id,
+		    'instructorFullName' => $instructor->full_name,
+		    'activityTypeId' => $groupActivities[$groupActivitiesIndex]['activity_type_id'],
+		    'activityTypeName' => ($activityType !== null)?$activityType->name:'',
+		    'subgroup' => $groupActivities[$groupActivitiesIndex]['subgroup'],
+		    'groupActivitiesIndex' => $groupActivitiesIndex,
 	    ]);
     }        
 }
