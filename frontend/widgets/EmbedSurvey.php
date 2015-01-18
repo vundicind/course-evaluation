@@ -14,6 +14,9 @@ use yii\helpers\Html;
 class EmbedSurvey extends Widget {
     
     public $lang = '';
+    public $src = '';
+    public $surveyId = '';
+    public $params = [];    
     
     /**
      * qcode => answer
@@ -29,7 +32,12 @@ class EmbedSurvey extends Widget {
      * Renders the widget.
      */
     public function run() {
-        echo Html::beginTag('iframe', ['src' => 'http://elearning.usarb.md/dmc/cc/index.php/survey/index/sid/671178/newtest/Y/lang/ro?FACULTATE=A2', 'width' => '100%', 'height' => '400px', 'name' => 'Survey EN', 'frameborder' => '0']);
+        $_lang = (!empty($this->lang))?'lang=' . $this->lang : '';
+        $_params = '';
+        foreach($this->params as $param=>$value)
+            $_params .= $param . '=' . $value . '&';
+
+        echo Html::beginTag('iframe', ['src' => $this->src . '/index.php/' . $this->surveyId . '?' . $_lang . '&' . $_params, 'width' => '100%', 'height' => '700px', 'name' => 'Survey EN', 'frameborder' => '0']);
         echo '<p>Your browser doesn\'t support frames. You can call the page here: <a href="http://91.250.115.126/index.php/survey/index/sid/288891/lang/en">Survey My Europe</a></p>';
         echo Html::endTag('iframe');
     }
