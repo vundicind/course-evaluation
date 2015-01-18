@@ -140,11 +140,9 @@ class SurveyController extends \yii\web\Controller
         
         if($groupActivitiesIndex === null)
             $groupActivitiesIndex = 0;
-        else    
-            $groupActivitiesIndex++;
             
         if($groupActivitiesIndex >= count($groupActivities))
-            die('Gata testul');    
+            die('<span style="font-size:18px;">Vă mulţumim pentru sprijinul acordat!</span>');    
  
         $course = \common\models\Course::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['course_id']])->one();
         $instructor = \common\models\Instructor::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['instructor_id']])->one();
@@ -161,4 +159,16 @@ class SurveyController extends \yii\web\Controller
 		    'groupActivitiesIndex' => $groupActivitiesIndex,
 	    ]);
     }        
+    
+    public function actionSubmit()
+    {
+        $groupActivitiesIndex = \Yii::$app->session->get('survey.groupActivitiesIndex');
+        if($groupActivitiesIndex === null)
+            $groupActivitiesIndex = 0;
+        else
+            $groupActivitiesIndex++;
+        \Yii::$app->session->set('survey.groupActivitiesIndex', $groupActivitiesIndex);
+
+        echo '<script>window.top.location.reload();</script>';
+    }
 }
