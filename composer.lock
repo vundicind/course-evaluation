@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b340753e95084793c7db7519c7712a4e",
+    "hash": "fd439078c69c2227dc9d279db779e764",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -315,6 +315,43 @@
                 "html"
             ],
             "time": "2013-11-30 08:25:19"
+        },
+        {
+            "name": "fguillot/json-rpc",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fguillot/JsonRPC.git",
+                "reference": "86e8339205616ad9b09d581957cc084a99c0ed27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fguillot/JsonRPC/zipball/86e8339205616ad9b09d581957cc084a99c0ed27",
+                "reference": "86e8339205616ad9b09d581957cc084a99c0ed27",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JsonRPC": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Unlicense"
+            ],
+            "authors": [
+                {
+                    "name": "Frédéric Guillot",
+                    "homepage": "http://fredericguillot.com"
+                }
+            ],
+            "description": "A simple Json-RPC client/server library that just works",
+            "homepage": "https://github.com/fguillot/JsonRPC",
+            "time": "2014-11-22 20:32:14"
         },
         {
             "name": "kartik-v/bootstrap-checkbox-x",
