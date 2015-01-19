@@ -82,8 +82,15 @@ class LimeSurvey extends Component {
             $this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));
         
         return $this->client->execute('get_question_properties', array($this->sessionKey, $questionId, $questionSettings, 'ro'));
-    }    
+    }
 
+    public function setQuestionProperties($questionId, $questionSettings, $language = null) {
+    	if (empty($this->sessionKey))
+    		$this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));
+    
+    	return $this->client->execute('set_question_properties', array($this->sessionKey, $questionId, $questionSettings, 'ro'));
+    }
+    
     public function exportResponses($id, $x1, $x2, $x3, $x4, $x5) {
         if (empty($this->sessionKey))
             $this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));

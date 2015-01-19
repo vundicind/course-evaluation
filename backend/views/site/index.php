@@ -14,5 +14,25 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
+    	Missing specialties:<br/>
+    	<?php foreach($missing['specialties'] as $spec):?>
+    		<?= $spec ?><br/>
+    	<?php endforeach;?>
+    	
+    	Missing groups:<br/>
+    	<?php foreach($missing['groups'] as $group):?>
+    		<?= $group ?><br/>
+    	<?php endforeach;?>
+
+    	Missing courses:<br/>
+    	<?php foreach($missing['courses'] as $course):?>
+    		<?= $course ?><br/>
+    	<?php endforeach;?>
+    	
+    	Missing instructors:<br/>
+    	<?php foreach($missing['instructors'] as $instr):?>
+    		<?= $instr ?><br/>
+    	<?php endforeach;?>
+    	
     </div>
 </div>
