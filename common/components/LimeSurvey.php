@@ -12,8 +12,10 @@ class LimeSurvey extends CApplicationComponent {
     public $username;
     public $password;
     public $url;
+    public $surveyId = null;
     private $client;
     private $sessionKey = null;
+    
 
     public function init() {
         $this->client = new Client("{$this->url}/index.php/admin/remotecontrol", $debug=true);

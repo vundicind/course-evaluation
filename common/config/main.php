@@ -9,11 +9,12 @@ return [
             'enablePrettyUrl' => true,
         	'showScriptName' => false,
     	],
-		'survey' => array(
+		'survey' => [
     		'class' => 'common.components.LimeSurvey',
     		'username' => 'admin',
     		'password' => 'Samsung_1',
-    		'url' => 'http://elearning.usarb.md/dmc/limesurvey'
-		)    		
+    		'url' => 'http://elearning.usarb.md/dmc/limesurvey',
+			'surveyId' => '429785',		
+		]    		
     ],
 ];
