@@ -4,11 +4,15 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use common\models\LoginForm;
+use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
+use common\models\LoginForm;
+use common\models\Faculty;
+use common\models\StudyCycle;
 use common\models\Specialty;
 use common\models\Group;
 use common\models\Course;
+use common\models\ActivityType;
 use common\models\Instructor;
 
 /**
@@ -68,102 +72,71 @@ class SiteController extends Controller
     	
     	
     	$missing = ['specialties' => [], 'groups' => [], 'courses' => [], 'instructors' => []];
+    	$nonCorrespondence = [];
     	foreach(\Yii::$app->survey->listGroups($surveyId) as $gData) {
     		if($gData['id']['language'] == 'ro' && $gData['group_name'] == 'META') {
     			foreach(\Yii::$app->survey->listQuestions($surveyId, $gData['id']['gid']) as $qData)
     			{
-    				if($qData['title'] == 'SPECIALITATEA')
-    				{
-    					$props = Yii::$app->survey->getQuestionProperties($qData['id']['qid'], ['answeroptions','question','attributes']);
-    					$specs = Specialty::find()->all();
-    					foreach($specs as $spec)
-    					{
-    						$yes = false;
-    						foreach($props['answeroptions'] as $opt)
-    						{
-    							if(strtolower($spec->name) == strtolower($opt['answer']))
-    							{
-    								$yes = true;
-    								break;
-    							}
-    						}
-    						if(!$yes)
-    						{
-    							$missing['specialties'][] = $spec->name;
-    						}		
-    					}
-    				}
-    				if($qData['title'] == 'GRUPA')
-    				{
-    					$props = Yii::$app->survey->getQuestionProperties($qData['id']['qid'], ['answeroptions','question','attributes']);
-    					$groups = Group::find()->all();
-    					foreach($groups as $group)
-    					{
-    						$yes = false;
-    						foreach($props['answeroptions'] as $opt)
-    						{
-    							if(strtolower($group->name) == strtolower($opt['answer']))
-    							{
-    								$yes = true;
-    								break;
-    							}
-    						}
-    						if(!$yes)
-    						{
-    							$missing['groups'][] = $group->name;
-    						}
-    					}
-    				}
-    				if($qData['title'] == 'DISCIPLINA')
-    				{
-    					$props = Yii::$app->survey->getQuestionProperties($qData['id']['qid'], ['answeroptions','question','attributes']);
-    					$courses = Course::find()->all();
-    					foreach($courses as $course)
-    					{
-    						$yes = false;
-    						foreach($props['answeroptions'] as $opt)
-    						{
-    							if(strtolower($course->name) == strtolower($opt['answer']))
-    							{
-    								$yes = true;
-    								break;
-    							}
-    						}
-    						if(!$yes)
-    						{
-    							$missing['courses'][] = $course->name;
-    						}
-    					}
-    				}
-    				if($qData['title'] == 'PROFESORUL')
-    				{
-    					$props = Yii::$app->survey->getQuestionProperties($qData['id']['qid'], ['answeroptions','question','attributes']);
-    					$instrs = Instructor::find()->all();
-    					foreach($instrs as $instr)
-    					{
-    						$yes = false;
-    						foreach($props['answeroptions'] as $opt)
-    						{
-    							if(strtolower($instr->full_name) == strtolower($opt['answer']))
-    							{
-    								$yes = true;
-    								break;
-    							}
-    						}
-    						if(!$yes)
-    						{
-    							$missing['instructors'][] = $instr->full_name;
-    						}
-    					}
-    				}
+    			    switch($qData['title'])
+    			    {
+    			        case 'FACULTATEA':
+    			            $nonCorrespondence['FACULTATEA'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                Faculty::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->name;}
+    			            );
+    			            break;
+    			        case 'CICLUL':    
+    			            $nonCorrespondence['CICLUL'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                StudyCycle::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->name;}
+    			            );
+    			            break;
+    			        case 'SPECIALITATEA':    
+    			            $nonCorrespondence['SPECIALITATEA'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                Specialty::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->name;}
+    			            );
+    			            break;
+    			        case 'GRUPA':    
+    			            $nonCorrespondence['GRUPA'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                Group::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->name;}
+    			            );
+    			            break;
+    			        case 'DISCIPLINA':    
+    			            $nonCorrespondence['DISCIPLINA'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                Course::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->name;}
+    			            );
+    			            break;
+    			        case 'ACTIVITATEA':    
+    			            $nonCorrespondence['ACTIVITATEA'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                ActivityType::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->name;}
+    			            );
+    			            break;
+    			        case 'PROFESORUL':    
+    			            $nonCorrespondence['PROFESORUL'] = $this->checkNonCorrespondence(
+    			                $qData['id']['qid'], 
+    			                Instructor::find()->orderBy(['id' => SORT_ASC])->all(), 
+    			                function($model){return $model->full_name;}
+    			            );
+    			            break;
+    			    }
     			}	
     		}
     	}    	
-
+    	
         return $this->render('index', [
         		'active' => $active, 
-        		'missing' => $missing
-        		
+        		'missing' => $missing,
+        		'nonCorrespondence' => $nonCorrespondence,
         ]);
     }
 
@@ -189,4 +162,22 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    
+    /* Helpers */
+    
+    public function checkNonCorrespondence($questionId, $models, $modelNameFunc)
+    {
+        $result = [];
+        $props = Yii::$app->survey->getQuestionProperties($questionId, ['answeroptions']);
+        //$models = Faculty::find()->orderBy(['id' => SORT_ASC])->all();
+        foreach($models as $model)
+    	{
+    	    if(!isset($props['answeroptions'][$model->id]) || strtolower($modelNameFunc($model)) !== strtolower($props['answeroptions'][$model->id]['answer']))
+    	    {
+    	        $result[] = ['code' => $model->id, 'answer' => $modelNameFunc($model)];
+    	    }
+    	}
+    	
+    	return $result;
+    }   
 }

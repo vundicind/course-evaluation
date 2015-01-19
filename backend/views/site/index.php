@@ -1,4 +1,7 @@
 <?php
+
+use yii\grid\GridView;
+
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
@@ -14,25 +17,68 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
-    	Missing specialties:<br/>
-    	<?php foreach($missing['specialties'] as $spec):?>
-    		<?= $spec ?><br/>
-    	<?php endforeach;?>
-    	
-    	Missing groups:<br/>
-    	<?php foreach($missing['groups'] as $group):?>
-    		<?= $group ?><br/>
-    	<?php endforeach;?>
+        <?php if(count($nonCorrespondence['FACULTATEA']) > 0):?>
+        	<h3>Faculty noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['FACULTATEA'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
+    
+        <?php if(count($nonCorrespondence['CICLUL']) > 0):?>
+        	<h3>Study cycle noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['CICLUL'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
 
-    	Missing courses:<br/>
-    	<?php foreach($missing['courses'] as $course):?>
-    		<?= $course ?><br/>
-    	<?php endforeach;?>
+        <?php if(count($nonCorrespondence['SPECIALITATEA']) > 0):?>
+        	<h3>Specialty noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['SPECIALITATEA'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
     	
-    	Missing instructors:<br/>
-    	<?php foreach($missing['instructors'] as $instr):?>
-    		<?= $instr ?><br/>
-    	<?php endforeach;?>
+        <?php if(count($nonCorrespondence['GRUPA']) > 0):?>
+        	<h3>Group noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['GRUPA'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
+
+        <?php if(count($nonCorrespondence['DISCIPLINA']) > 0):?>
+        	<h3>Course noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['DISCIPLINA'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
+
+        <?php if(count($nonCorrespondence['ACTIVITATEA']) > 0):?>
+        	<h3>Activity type noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['ACTIVITATEA'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
+
+        <?php if(count($nonCorrespondence['PROFESORUL']) > 0):?>
+        	<h3>Instructor noncorrespondence:</h3>
+        	<ul>
+        	<?php foreach($nonCorrespondence['PROFESORUL'] as $row):?>
+        		<li><?= $row['answer'] ?></li>
+        	<?php endforeach;?>
+        	</ul>
+        <?php endif;?>
     	
     </div>
 </div>
