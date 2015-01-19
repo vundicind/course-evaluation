@@ -55,7 +55,14 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+    	$surveyId = \Yii::$app->get('survey')->surveyId;
+    	$sp = Yii::$app->survey->getSurveyProperties($surveyId, ['sid', 'active', 'expires']);
+    	if(isset($sp['active']) && $sp['active'] == 'Y' && empty($sp['expires']))
+    		$active = true;
+    	else
+    		$active = false;
+
+        return $this->render('index', ['active' => $active]);
     }
 
     public function actionLogin()
