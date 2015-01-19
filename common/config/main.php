@@ -10,7 +10,7 @@ return [
         	'showScriptName' => false,
     	],
 		'survey' => [
-    		'class' => 'common.components.LimeSurvey',
+    		'class' => 'common\components\LimeSurvey',
     		'username' => 'admin',
     		'password' => 'Samsung_1',
     		'url' => 'http://elearning.usarb.md/dmc/limesurvey',

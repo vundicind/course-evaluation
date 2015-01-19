@@ -1,5 +1,9 @@
 <?php
 
+namespace common\components;
+
+use yii\base\Component;
+use yii\base\InvalidConfigException;
 use JsonRPC\Client;
 
 /**
@@ -7,7 +11,7 @@ use JsonRPC\Client;
  *
  * @author vundicind
  */
-class LimeSurvey extends CApplicationComponent {
+class LimeSurvey extends Component {
 
     public $username;
     public $password;
@@ -18,7 +22,10 @@ class LimeSurvey extends CApplicationComponent {
     
 
     public function init() {
-        $this->client = new Client("{$this->url}/index.php/admin/remotecontrol", $debug=true);
+    	parent::init();
+    	    	 
+        $this->client = new Client("{$this->url}/index.php/admin/remotecontrol");
+        $this->client->debug = true;
     }
     
     public function closeSession() {
@@ -38,7 +45,7 @@ class LimeSurvey extends CApplicationComponent {
     public function listSurveys() {
         if (empty($this->sessionKey))
             $this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));
-        
+
         return $this->client->execute('list_surveys', array($this->sessionKey, null));
     }
 
@@ -82,6 +89,14 @@ class LimeSurvey extends CApplicationComponent {
             $this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));
         
         return $this->client->execute('export_responses', array($this->sessionKey, $id, $x1, $x2, $x3, $x4, $x5));
-    }    
+    }
+
+    public function getSurveyProperties($id, $surveySettings)
+    {
+    	if (empty($this->sessionKey))
+    		$this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));
+    	 
+    	return $this->client->execute('get_survey_properties', array($this->sessionKey, $id, $surveySettings));
+    }
 
 }
