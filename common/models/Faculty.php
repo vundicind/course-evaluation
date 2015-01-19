@@ -29,6 +29,7 @@ class Faculty extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name', 'short_name'], 'string', 'max' => 255],
+            [['name'], 'trim'],
             [['name', 'short_name'], 'unique'],
         ];
     }
