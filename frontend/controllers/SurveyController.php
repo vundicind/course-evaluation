@@ -14,6 +14,16 @@ class SurveyController extends \yii\web\Controller
 {
     public function actionIndex()
     {
+    	$surveyId = \Yii::$app->survey->surveyId;
+    	$sp = \Yii::$app->survey->getSurveyProperties($surveyId, ['sid', 'active', 'expires']);
+    	if(isset($sp['active']) && $sp['active'] == 'Y' && empty($sp['expires']))
+    		$active = true;
+    	else
+    		$active = false;
+    		
+    	if(!$active)
+        	return $this->render('index', ['active' => $active]);	
+    
         \Yii::$app->session->set('survey.groupActivities', null);
     
         $items = [];
