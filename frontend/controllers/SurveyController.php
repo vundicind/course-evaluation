@@ -157,6 +157,7 @@ class SurveyController extends \yii\web\Controller
 		    'activityTypeName' => ($activityType !== null)?$activityType->name:'',
 		    'subgroup' => $groupActivities[$groupActivitiesIndex]['subgroup'],
 		    'groupActivitiesIndex' => $groupActivitiesIndex,
+			'cc' => $this->getCode('SPECIALITATEA', 'Management educațional'),
 	    ]);
     }        
     
@@ -170,5 +171,42 @@ class SurveyController extends \yii\web\Controller
         \Yii::$app->session->set('survey.groupActivitiesIndex', $groupActivitiesIndex);
 
         echo '<script>window.top.location.reload();</script>';
+    }
+    
+    public function getCode($type, $name)
+    {
+    	$result = '';    	
+    	$surveyId = \Yii::$app->survey->surveyId;
+    	foreach(\Yii::$app->survey->listGroups($surveyId) as $gData) {
+    		if($gData['id']['language'] == 'ro' && $gData['group_name'] == 'META') {
+    			foreach(\Yii::$app->survey->listQuestions($surveyId, $gData['id']['gid']) as $qData)
+    			{
+    				if($qData['title'] == 'SPECIALITATEA' && $type == 'SPECIALITATEA')
+    				{
+    					$props = \Yii::$app->survey->getQuestionProperties($qData['id']['qid'], ['answeroptions','question','attributes']);
+
+    					foreach($props['answeroptions'] as $code=>$opt)
+    					{
+    						if(strtolower($name) == strtolower($opt['answer']))
+    						{
+    							$result = $code;
+    							break;
+    						}
+    					}
+    				}
+    				if($qData['title'] == 'GRUPA' && $type == 'GRUPA')
+    				{
+    				}
+    				if($qData['title'] == 'DISCIPLINA' && $type == 'DISCIPLINA')
+    				{
+    				}
+    				if($qData['title'] == 'PROFESORUL' && $type == 'PROFESORUL')
+    				{
+    				}
+    			}
+    		}
+    	}
+
+    	return $result;
     }
 }

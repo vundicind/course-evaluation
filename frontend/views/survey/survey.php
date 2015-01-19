@@ -2,6 +2,8 @@
 <p><?= $instructorFullName ?></p>
 <p><?= $activityTypeName . '(' . $activityTypeId .')' ?></p>
 
+<?= 'CC='.$cc ?>
+
 <?php
 if($subgroup):
 ?>
