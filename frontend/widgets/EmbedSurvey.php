@@ -37,7 +37,7 @@ class EmbedSurvey extends Widget {
         foreach($this->params as $param=>$value)
             $_params .= $param . '=' . $value . '&';
 
-        echo Html::beginTag('iframe', ['src' => $this->src . '/index.php/' . $this->surveyId . '?' . $_lang . '&' . $_params, 'width' => '100%', 'height' => '700px', 'name' => 'Survey EN', 'frameborder' => '0']);
+        echo Html::beginTag('iframe', ['src' => $this->src . '/index.php/' . $this->surveyId . '/lang/' . $_lang . '/newtest/Y?' . $_params, 'width' => '100%', 'height' => '800px', 'name' => 'Survey EN', 'frameborder' => '0']);
         echo '<p>Your browser doesn\'t support frames. You can call the page here: <a href="http://91.250.115.126/index.php/survey/index/sid/288891/lang/en">Survey My Europe</a></p>';
         echo Html::endTag('iframe');
     }
