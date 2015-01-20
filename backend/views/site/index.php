@@ -21,7 +21,7 @@ $this->title = 'My Yii Application';
         	<h3>Faculty noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['FACULTATEA'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
@@ -30,7 +30,7 @@ $this->title = 'My Yii Application';
         	<h3>Study cycle noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['CICLUL'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
@@ -39,7 +39,7 @@ $this->title = 'My Yii Application';
         	<h3>Specialty noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['SPECIALITATEA'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
@@ -48,7 +48,7 @@ $this->title = 'My Yii Application';
         	<h3>Group noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['GRUPA'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
@@ -57,7 +57,7 @@ $this->title = 'My Yii Application';
         	<h3>Course noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['DISCIPLINA'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
@@ -66,7 +66,7 @@ $this->title = 'My Yii Application';
         	<h3>Activity type noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['ACTIVITATEA'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
@@ -75,7 +75,7 @@ $this->title = 'My Yii Application';
         	<h3>Instructor noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['PROFESORUL'] as $row):?>
-        		<li><?= $row['answer'] ?></li>
+        		<li>[<?= $row['code'] ?>] <?= $row['answer'] ?></li>
         	<?php endforeach;?>
         	</ul>
         <?php endif;?>
