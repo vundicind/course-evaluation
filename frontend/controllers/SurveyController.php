@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use yii\helpers\Url;
 use common\models\Faculty;
 use common\models\StudyCycle;
 use common\models\StudyForm;
@@ -21,9 +22,6 @@ class SurveyController extends \yii\web\Controller
     	else
     		$active = false;
     		
-    	if(!$active)
-        	return $this->render('index', ['active' => $active]);	
-    
         \Yii::$app->session->set('survey.groupActivities', null);
     
         $items = [];
@@ -53,11 +51,13 @@ class SurveyController extends \yii\web\Controller
             $items[$i]['items'][$j]['items'][] = ['label' => $group->name, 'url' => ['survey/survey', 'group_id' => $group->id]];
         }    
 
-        return $this->render('index', ['items' => $items]);
+        return $this->render('index', ['items' => $items, 'active' => $active]);
     }
     
     public function actionSurvey($group_id)
     {
+        \Yii::$app->session->set('survey.groupId', $group_id);
+    
         $semester_id = 1;//!!!
         
         $groupActivities = \Yii::$app->session->get('survey.groupActivities');
@@ -65,7 +65,8 @@ class SurveyController extends \yii\web\Controller
 
         if($groupActivities == null)
     	{
-    	    $groupActivitiesIndex = null;
+    	    $groupActivitiesIndex = 0;
+    	    \Yii::$app->session->set('survey.groupActivitiesIndex', $groupActivitiesIndex);
     	    
     	    $p = ActivityType::find()->orderBy(['id' => SORT_ASC])->one()->id;
 
@@ -152,26 +153,24 @@ class SurveyController extends \yii\web\Controller
             $groupActivitiesIndex = 0;
             
         if($groupActivitiesIndex >= count($groupActivities))
-            die('<span style="font-size:18px;">Vă mulţumim pentru sprijinul acordat!</span>');    
+            return $this->render('thanks');
  
         $course = \common\models\Course::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['course_id']])->one();
         $instructor = \common\models\Instructor::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['instructor_id']])->one();
         $activityType = \common\models\ActivityType::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['activity_type_id']])->one();
+        $group = \common\models\Group::find()->where(['id' => $groupActivities[$groupActivitiesIndex]['group_id']])->one();        
 
 		return $this->render('survey', [
-		    'courseId' => $course->id,		
-		    'courseName' => $course->name,
-		    'instructorId' => $instructor->id,
-		    'instructorFullName' => $instructor->full_name,
-		    'activityTypeId' => $groupActivities[$groupActivitiesIndex]['activity_type_id'],
-		    'activityTypeName' => ($activityType !== null)?$activityType->name:'',
+		    'course' => $course,		
+		    'instructor' => $instructor,
+		    'group' => $group,
+		    'activityType' => $activityType,
 		    'subgroup' => $groupActivities[$groupActivitiesIndex]['subgroup'],
 		    'groupActivitiesIndex' => $groupActivitiesIndex,
-			'cc' => $this->getCode('SPECIALITATEA', 'Management educațional'),
 	    ]);
     }        
     
-    public function actionSubmit()
+    public function actionSubmit($iframe = true)
     {
         $groupActivitiesIndex = \Yii::$app->session->get('survey.groupActivitiesIndex');
         if($groupActivitiesIndex === null)
@@ -180,43 +179,11 @@ class SurveyController extends \yii\web\Controller
             $groupActivitiesIndex++;
         \Yii::$app->session->set('survey.groupActivitiesIndex', $groupActivitiesIndex);
 
-        echo '<script>window.top.location.reload();</script>';
-    }
-    
-    public function getCode($type, $name)
-    {
-    	$result = '';    	
-    	$surveyId = \Yii::$app->survey->surveyId;
-    	foreach(\Yii::$app->survey->listGroups($surveyId) as $gData) {
-    		if($gData['id']['language'] == 'ro' && $gData['group_name'] == 'META') {
-    			foreach(\Yii::$app->survey->listQuestions($surveyId, $gData['id']['gid']) as $qData)
-    			{
-    				if($qData['title'] == 'SPECIALITATEA' && $type == 'SPECIALITATEA')
-    				{
-    					$props = \Yii::$app->survey->getQuestionProperties($qData['id']['qid'], ['answeroptions','question','attributes']);
+        $group_id = \Yii::$app->session->get('survey.groupId');
 
-    					foreach($props['answeroptions'] as $code=>$opt)
-    					{
-    						if(strtolower($name) == strtolower($opt['answer']))
-    						{
-    							$result = $code;
-    							break;
-    						}
-    					}
-    				}
-    				if($qData['title'] == 'GRUPA' && $type == 'GRUPA')
-    				{
-    				}
-    				if($qData['title'] == 'DISCIPLINA' && $type == 'DISCIPLINA')
-    				{
-    				}
-    				if($qData['title'] == 'PROFESORUL' && $type == 'PROFESORUL')
-    				{
-    				}
-    			}
-    		}
-    	}
-
-    	return $result;
+        if(!$iframe)
+            echo '<script>location.href="'. Url::to(['survey/survey', 'group_id' => $group_id]) .'";</script>';
+        else        
+            echo '<script>window.top.location.href = "'. Url::to(['survey/survey', 'group_id' => $group_id]) .'";</script>';
     }
 }
