@@ -30,6 +30,9 @@ class Course extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['name'], 'trim'],
             [['name'], 'unique'],
+        	['name', 'filter', 'filter' => function ($value) {
+        		return preg_replace('!\s+!', ' ', $value);
+        	}],        		
         ];
     }
 
