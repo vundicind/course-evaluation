@@ -54,6 +54,30 @@ $this->title = 'My Yii Application';
     
     <?php endif;?>
     </div>
+    
+        <div class="col-md-4">
+    	<?= kartik\helpers\Html::panel([
+			'heading' => '',
+           	'body' => '',
+           'footer'=> '',
+           'headingTitle' => true,
+           'footerTitle' => true,
+       ]
+      ) ?>
+    </div>
+    
+
+        <div class="col-md-4">
+    	<?= kartik\helpers\Html::panel([
+			'heading' => '',
+           	'body' => '',
+           'footer'=> '',
+           'headingTitle' => true,
+           'footerTitle' => true,
+       ]
+      ) ?>
+    </div>
+    
     </div>
     
         <?php if(count($nonCorrespondence['FACULTATEA']) > 0):?>
