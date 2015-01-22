@@ -113,5 +113,12 @@ class LimeSurvey extends Component {
     
     	return $this->client->execute('set_survey_properties', array($this->sessionKey, $id, $surveySettings));
     }
+
+    public function getSummary($id, $statname = 'all')
+    {
+    	if (empty($this->sessionKey))
+    		$this->sessionKey = $this->client->execute('get_session_key', array($this->username, $this->password));
     
+    	return $this->client->execute('get_summary', array($this->sessionKey, $id, $statname));
+    }
 }
