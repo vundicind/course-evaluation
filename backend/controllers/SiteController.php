@@ -133,10 +133,23 @@ class SiteController extends Controller
     		}
     	}    	
     	
+    	
+    	// summary
+    	$summary = null;
+    	if($active)
+    	{	
+    		$command = \Yii::$app->getDb()->createCommand('SELECT ROUND(AVG(cnt)) AS avg FROM (SELECT COUNT(*) AS cnt FROM group_activity WHERE semester_id=1 GROUP BY group_id) AS cnts');
+    		$rows = $command->queryAll();
+    		    		
+    		$summary  = \Yii::$app->survey->getSummary($surveyId);
+    		$summary['students'] = round($summary['full_responses'] / $rows[0]['avg']);
+    	}
+    	
         return $this->render('index', [
         		'active' => $active, 
         		'missing' => $missing,
         		'nonCorrespondence' => $nonCorrespondence,
+        		'summary' => $summary,
         ]);
     }
 

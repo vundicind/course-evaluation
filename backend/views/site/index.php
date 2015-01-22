@@ -17,6 +17,42 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
+    
+    <?php if($active && !empty($summary)):?>
+    	<?= kartik\helpers\Html::panel([
+			'heading' => 'Sumarul răspunsurilor',
+           	'body' => '',
+           	'postBody' => kartik\helpers\Html::listGroup([
+               [
+                   'content' => 'Răspunsuri complete',
+                   'url' => '#',
+                   'badge' => $summary['completed_responses']
+               ],
+               [
+                   'content' => 'Răspunsuri incomplete',
+                   'url' => '#',
+                   'badge' => $summary['incomplete_responses']
+               ],
+               [
+                   'content' => 'Total răspunsuri',
+                   'url' => '#',
+                   'badge' => $summary['full_responses']
+               ],
+               [
+               		'content' => 'Numărul de studenți (aproximativ)',
+               		'url' => '#',
+               		'badge' => $summary['students']
+               	],
+               		 
+           ], [], 'ul', 'li'),
+           'footer'=> '',
+           'headingTitle' => true,
+           'footerTitle' => true,
+       ]
+      ) ?>
+    
+    <?php endif;?>
+    
         <?php if(count($nonCorrespondence['FACULTATEA']) > 0):?>
         	<h3>Faculty noncorrespondence:</h3>
         	<ul>
