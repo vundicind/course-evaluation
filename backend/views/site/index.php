@@ -17,7 +17,8 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
-    
+    <div class="row">
+    <div class="col-md-4">
     <?php if($active && !empty($summary)):?>
     	<?= kartik\helpers\Html::panel([
 			'heading' => 'Sumarul răspunsurilor',
@@ -52,6 +53,8 @@ $this->title = 'My Yii Application';
       ) ?>
     
     <?php endif;?>
+    </div>
+    </div>
     
         <?php if(count($nonCorrespondence['FACULTATEA']) > 0):?>
         	<h3>Faculty noncorrespondence:</h3>
