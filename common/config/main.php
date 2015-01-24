@@ -15,6 +15,14 @@ return [
     		'password' => 'Samsung_1',
     		'url' => 'http://elearning.usarb.md/dmc/limesurvey',
 			'surveyId' => '429785',		
-		]    		
+		],
+    	'settings' => [
+    		'class' => 'pheme\settings\components\Settings',
+    	],    		
     ],
+	'modules' => [
+		'settings' => [
+			'class' => 'pheme\settings\Module',
+		],			
+	],	
 ];
