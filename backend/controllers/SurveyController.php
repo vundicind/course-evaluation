@@ -15,6 +15,9 @@ class SurveyController extends Controller
 		Yii::$app->survey->activateSurvey($surveyId);
 		Yii::$app->survey->setSurveyProperties($surveyId, ['expires' => '']);
 		
+		//https://github.com/phemellc/yii2-settings
+		//Yii::$app->settings.set('survey.semester', 1, )
+		
 		return $this->goHome();
 	}
 	
