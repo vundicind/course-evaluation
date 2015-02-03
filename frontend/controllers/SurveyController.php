@@ -122,14 +122,23 @@ class SurveyController extends \yii\web\Controller
                     {
                         if(array_key_exists($p, $instructor['activities']) && !$instructor['activities'][$p]['activity']['subgroup'])
                         {
-                            $groupActivities[] = [
-                                'course_id' => $course['course']['id'],
-                                'group_id' => $group_id,
-                                'instructor_id' => $instructor['instructor']['id'],
-                                'activity_type_id' => 0,
-                                'subgroup' => false,
-                            ];
-                            continue;
+                        	$sb = false;
+                        	foreach($instructor['activities'] as $aaa => $bbb)
+                        	{
+                        		if($bbb['activity']['subgroup'])
+                        			$sb = true;	
+                        	}
+                        	
+                        	if(!$sb) {
+                            	$groupActivities[] = [
+                                	'course_id' => $course['course']['id'],
+	                                'group_id' => $group_id,
+    	                            'instructor_id' => $instructor['instructor']['id'],
+        	                        'activity_type_id' => 0,
+            	                    'subgroup' => false,
+                	            ];
+                    	        continue;
+                        	}
                         }
                     }    
             
