@@ -1,3 +1,7 @@
+<center>
+	<h1><?= $group->name ?>></h1>
+</center>
+
 <?php
 if($subgroup && !isset($_GET['subgroup'])):
 ?>
