@@ -1,5 +1,5 @@
 <center>
-	<h1><?= $group->name ?>></h1>
+	<h1><?= $group->name ?></h1>
 </center>
 
 <?php
