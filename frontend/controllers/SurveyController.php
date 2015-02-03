@@ -120,7 +120,7 @@ class SurveyController extends \yii\web\Controller
                 {
                     if(count($instructor['activities']) >= 2)
                     {
-                        if(array_key_exists($p, $instructor['activities']) && !$instructor['activities'][$p]['subgroup'])
+                        if(array_key_exists($p, $instructor['activities']) && !$instructor['activities'][$p]['activity']['subgroup'])
                         {
                             $groupActivities[] = [
                                 'course_id' => $course['course']['id'],
