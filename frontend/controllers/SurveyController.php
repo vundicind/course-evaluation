@@ -28,11 +28,12 @@ class SurveyController extends \yii\web\Controller
         
         $groups = Group::find()
             ->joinWith(['specialty'])
-            ->orderBy(['specialty.faculty_id' => SORT_ASC, 'specialty_id' => SORT_ASC, 'name' => SORT_ASC])
+            ->orderBy(['specialty.faculty_id' => SORT_ASC, 'specialty_id' => SORT_ASC, 'study_form_id' => SORT_ASC, 'name' => SORT_ASC])
             ->all();    
             
         $i = null; $iid = null;
         $j = null; $jid = null;   
+        $k = null; $kid = null;        
         foreach($groups as $group)
         {
             if($i === null || ($iid !== null && $iid !== $group->specialty->faculty_id))
@@ -40,15 +41,24 @@ class SurveyController extends \yii\web\Controller
                 $items[] = ['label' => $group->specialty->faculty->name, 'items' => []];
                 $i = ($i === null) ? 0 : $i+1; $iid = $group->specialty->faculty_id;
                 $j = null;
+                $k = null;
             }    
 
             if($j === null || ($jid !== null && $jid !== $group->specialty_id))
             {
                 $items[$i]['items'][] = ['label' => $group->specialty->name, 'items' => []];
                 $j = ($j === null) ? 0 : $j+1; $jid = $group->specialty_id;
+                $k = null;
             }    
-                 
-            $items[$i]['items'][$j]['items'][] = ['label' => $group->name, 'url' => ['survey/survey', 'group_id' => $group->id]];
+
+            if($k === null || ($kid !== null && $kid !== $group->study_form_id))
+            {
+            	$items[$i]['items'][$j]['items'][] = ['label' => $group->studyForm->name, 'items' => []];
+            	$k = ($k === null) ? 0 : $k+1; $kid = $group->study_form_id;
+            }
+            
+            //$items[$i]['items'][$j]['items'][] = ['label' => $group->name, 'url' => ['survey/survey', 'group_id' => $group->id]];
+            $items[$i]['items'][$j]['items'][$k]['items'][] = ['label' => $group->name, 'url' => ['survey/survey', 'group_id' => $group->id]];
         }    
 
         return $this->render('index', ['items' => $items, 'active' => $active]);
