@@ -39,15 +39,16 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
     
     <p>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
+        <?= Html::a(Yii::t('app', 'Create {modelClass} Sem I', [
     'modelClass' => 'Group Activity',
-]), ['group-activity/create', 'group_id' => $model->id, 'semester_id' => $semester_id], ['class' => 'btn btn-success']) ?>
+]), ['group-activity/create', 'group_id' => $model->id, 'semester_id' => $semester_id1], ['class' => 'btn btn-success']) ?>
     </p>
 <?php 
-	$GLOBALS['activityTypes'] = $activityTypes;//!!! 
-?>    
+	$GLOBALS['activityTypes'] = $activityTypes;//!!!
+?>
+
 <?= GridView::widget([
-    'dataProvider' => $dataProvider,
+    'dataProvider' => $dataProvider1,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         
@@ -92,5 +93,61 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]
 ]);?>
-    
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Create {modelClass} Sem II', [
+            'modelClass' => 'Group Activity',
+        ]), ['group-activity/create', 'group_id' => $model->id, 'semester_id' => $semester_id2], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?php
+    $GLOBALS['activityTypes'] = $activityTypes;//!!!
+    ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider2,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            ['attribute' => 'course', 'value' => 'course.name'],
+            [
+                'attribute' => $activityTypes[0]->name,
+                'format' => 'html',
+                'value' => function($model) use ($activityTypes) {$s='';if(!isset($model['activities'][$activityTypes[0]->id])) return NULL;foreach($model['activities'][$activityTypes[0]->id] as $ii=>$in) $s.=$in.'<br />'; return $s;}
+            ],
+            [
+                'attribute' => $activityTypes[1]->name,
+                'format' => 'html',
+                'value' => function($model) use ($activityTypes) {$s='';if(!isset($model['activities'][$activityTypes[1]->id])) return NULL;foreach($model['activities'][$activityTypes[1]->id] as $ii=>$in) $s.=$in.'<br />'; return $s;}
+            ],
+            [
+                'attribute' => $activityTypes[2]->name,
+                'format' => 'html',
+                'value' => function($model) use ($activityTypes) {$s='';if(!isset($model['activities'][$activityTypes[2]->id])) return NULL;foreach($model['activities'][$activityTypes[2]->id] as $ii=>$in) $s.=$in.'<br />'; return $s;}
+            ],
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, $model, $key) {
+                        $url = Url::toRoute(['/group-activity/update', 'course_id' => $model['course']['id'], 'group_id' => $model['group']['id'], 'semester_id' => $model['semester']['id']]);
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                            'title' => Yii::t('yii', 'Update'),
+                            'data-pjax' => '0',
+                        ]);
+                    },
+                    'delete' => function ($url, $model, $key) {
+                        $url = Url::toRoute(['/group-activity/delete', 'course_id' => $model['course']['id'], 'group_id' => $model['group']['id'], 'semester_id' => $model['semester']['id']]);
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                            'title' => Yii::t('yii', 'Delete'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                        ]);
+                    }
+                ]
+            ],
+        ]
+    ]);?>
+
 </div>

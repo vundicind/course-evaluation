@@ -54,21 +54,28 @@ class GroupController extends Controller
     public function actionView($id)
     {
     	$model = $this->findModel($id);//+RD20140116
-    	$semester_id = 1;//!!!
+    	$semester_id1 = 1;//!!!
+        $semester_id2 = 2;//!!!
     	
     	$activityTypes = ActivityType::find()->orderBy(['id' => SORT_ASC])->all();    	
     	
-    	$groupActivities = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
+    	$groupActivities1 = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
     		->joinWith(['course', 'instructor'])
-    		->where(['group_id' => $model->id, 'semester_id' => $semester_id])
+    		->where(['group_id' => $model->id, 'semester_id' => $semester_id1])
     		->orderBy(['course.name' => SORT_ASC, 'instructor.last_name' => SORT_ASC, 'instructor.first_name' => SORT_ASC])
     		->all();
-    	 
-		$groupCourses = [];
-		foreach($groupActivities as $ga)
+
+        $groupActivities2 = GroupActivity::find()//!!!This block should be moved to another action e.g. 'actionCourse'
+        ->joinWith(['course', 'instructor'])
+            ->where(['group_id' => $model->id, 'semester_id' => $semester_id2])
+            ->orderBy(['course.name' => SORT_ASC, 'instructor.last_name' => SORT_ASC, 'instructor.first_name' => SORT_ASC])
+            ->all();
+
+		$groupCourses1 = [];
+		foreach($groupActivities1 as $ga)
 		{
-			if(!isset($groupCourses[$ga->course_id]))
-				$groupCourses[$ga->course_id] = [
+			if(!isset($groupCourses1[$ga->course_id]))
+				$groupCourses1[$ga->course_id] = [
 						'course' => [
 								'name' => $ga->course->name,
 								'id' => $ga->course->id
@@ -77,31 +84,64 @@ class GroupController extends Controller
 								'id' => $model->id
 						],
 						'semester' => [
-								'id' => $semester_id
+								'id' => $semester_id1
 						],
 				];
 				
-				if(!isset($groupCourses[$ga->course_id]['activities']))
-					$groupCourses[$ga->course_id]['activities'] = [];
+				if(!isset($groupCourses1[$ga->course_id]['activities']))
+					$groupCourses1[$ga->course_id]['activities'] = [];
 				
-				if(!isset($groupCourses[$ga->course_id]['activities'][$ga->activity_type_id]))
-					$groupCourses[$ga->course_id]['activities'][$ga->activity_type_id] = [];
+				if(!isset($groupCourses1[$ga->course_id]['activities'][$ga->activity_type_id]))
+					$groupCourses1[$ga->course_id]['activities'][$ga->activity_type_id] = [];
 				
-				$groupCourses[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->full_name . (($ga->subgroup==1)?' (' . Yii::t('app', 'Subgroup') . ')':'');
+				$groupCourses1[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->full_name . (($ga->subgroup==1)?' (' . Yii::t('app', 'Subgroup') . ')':'');
 		}
-		
-		$dataProvider = new ArrayDataProvider([
-			'allModels' => $groupCourses,
+
+        $groupCourses2 = [];
+        foreach($groupActivities2 as $ga)
+        {
+            if(!isset($groupCourses2[$ga->course_id]))
+                $groupCourses2[$ga->course_id] = [
+                    'course' => [
+                        'name' => $ga->course->name,
+                        'id' => $ga->course->id
+                    ],
+                    'group' => [
+                        'id' => $model->id
+                    ],
+                    'semester' => [
+                        'id' => $semester_id2
+                    ],
+                ];
+
+            if(!isset($groupCourses2[$ga->course_id]['activities']))
+                $groupCourses2[$ga->course_id]['activities'] = [];
+
+            if(!isset($groupCourses2[$ga->course_id]['activities'][$ga->activity_type_id]))
+                $groupCourses2[$ga->course_id]['activities'][$ga->activity_type_id] = [];
+
+            $groupCourses2[$ga->course_id]['activities'][$ga->activity_type_id][$ga->instructor->id] = $ga->instructor->full_name . (($ga->subgroup==1)?' (' . Yii::t('app', 'Subgroup') . ')':'');
+        }
+
+
+		$dataProvider1 = new ArrayDataProvider([
+			'allModels' => $groupCourses1,
 			'pagination' => false,
 		]);
-				
-    	
+
+        $dataProvider2 = new ArrayDataProvider([
+            'allModels' => $groupCourses2,
+            'pagination' => false,
+        ]);
+
         return $this->render('view', [
             //'model' => $this->findModel($id),//-RD20140116
         	'model' => $model,//+RD20140116
-        	'semester_id' => $semester_id,
+        	'semester_id1' => $semester_id1,
+            'semester_id2' => $semester_id2,
         	'activityTypes' => $activityTypes,
-        	'dataProvider' => $dataProvider,
+        	'dataProvider1' => $dataProvider1,
+            'dataProvider2' => $dataProvider2,
         ]);
     }
 
