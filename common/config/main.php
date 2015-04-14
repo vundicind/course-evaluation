@@ -9,13 +9,6 @@ return [
             'enablePrettyUrl' => true,
         	'showScriptName' => false,
     	],
-		'survey' => [
-    		'class' => 'common\components\LimeSurvey',
-    		'username' => 'admin',
-    		'password' => 'Samsung_1',
-    		'url' => 'http://elearning.usarb.md/dmc/limesurvey',
-			'surveyId' => '429785',		
-		],
     	'settings' => [
     		'class' => 'pheme\settings\components\Settings',
     	],    		

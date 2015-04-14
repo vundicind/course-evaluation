@@ -142,7 +142,10 @@ class SiteController extends Controller
     		$rows = $command->queryAll();
     		    		
     		$summary  = \Yii::$app->survey->getSummary($surveyId);
-    		$summary['students'] = round($summary['full_responses'] / $rows[0]['avg']);
+			if(!empty($rows[0]['avg']))
+    			$summary['students'] = round($summary['full_responses'] / $rows[0]['avg']);
+			else
+				$summary['students'] = 0;
     	}
     	
         return $this->render('index', [
