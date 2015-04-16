@@ -16,6 +16,6 @@ return [
     'modules' => [
         'settings' => [
             'class' => 'pheme\settings\Module',
-            ],
+        ],
     ],
 ];
