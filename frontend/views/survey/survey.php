@@ -17,8 +17,8 @@ if($subgroup && !isset($_GET['subgroup'])):
 <?php else: ?>
 
 <?= \frontend\widgets\EmbedSurvey::widget([
-    'src' => 'http://elearning.usarb.md/dmc/limesurvey',
-    'surveyId' => '429785',
+    'src' => 'http://dmc.usarb.md/limesurvey',
+    'surveyId' => '453434',
     'lang' => 'ro',
     'params' => [
         'FACULTATEA' => $group->specialty->faculty_id,
