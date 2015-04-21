@@ -30,7 +30,7 @@ bin/composer global require "fxp/composer-asset-plugin:1.0.0-beta4"
 Update all the dependencies
 
 ```sh
-bin/composer update
+bin/composer install
 ```
 
 Make all db migrations 

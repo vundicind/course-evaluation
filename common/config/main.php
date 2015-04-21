@@ -7,15 +7,15 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
-        	'showScriptName' => false,
-    	],
-    	'settings' => [
-    		'class' => 'pheme\settings\components\Settings',
-    	],    		
+            'showScriptName' => false,
+        ],
+        'settings' => [
+            'class' => 'pheme\settings\components\Settings',
+        ],
     ],
-	'modules' => [
-		'settings' => [
-			'class' => 'pheme\settings\Module',
-		],			
-	],	
+    'modules' => [
+        'settings' => [
+            'class' => 'pheme\settings\Module',
+        ],
+    ],
 ];
