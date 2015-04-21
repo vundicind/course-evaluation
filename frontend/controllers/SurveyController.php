@@ -68,7 +68,7 @@ class SurveyController extends \yii\web\Controller
     {
         \Yii::$app->session->set('survey.groupId', $group_id);
     
-        $semester_id = 1;//!!!
+        $semester_id = 2;//!!!
         
         $groupActivities = \Yii::$app->session->get('survey.groupActivities');
         $groupActivitiesIndex = \Yii::$app->session->get('survey.groupActivitiesIndex');
