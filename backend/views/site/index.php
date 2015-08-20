@@ -57,8 +57,19 @@ $this->title = 'My Yii Application';
     
         <div class="col-md-4">
     	<?= kartik\helpers\Html::panel([
-			'heading' => '',
-           	'body' => '',
+			'heading' => 'Setări curente',
+           	'postBody' => kartik\helpers\Html::listGroup([
+               [
+                   'content' => 'Semestrul',
+                   'url' => '#',
+                   'badge' => Yii::$app->settings->get('app.semesterId', 'App')
+               ],
+               [
+                   'content' => 'ID-ul chestionarului',
+                   'url' => '#',
+                   'badge' => Yii::$app->settings->get('survey.surveyId', 'LimeSurvey')
+               ],
+           ], [], 'ul', 'li'),
            'footer'=> '',
            'headingTitle' => true,
            'footerTitle' => true,
