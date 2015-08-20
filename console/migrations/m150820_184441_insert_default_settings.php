@@ -14,7 +14,7 @@ class m150820_184441_insert_default_settings extends Migration
         $settings->set('survey.url', 'http://dmc.usarb.md/limesurvey', 'LimeSurvey', 'string');
         $settings->set('survey.surveyId', '453434', 'LimeSurvey', 'integer');                        
 
-        $settings->set('app.semesterId', '1', 'LimeSurvey', 'integer');                        
+        $settings->set('app.semesterId', '1', 'App', 'integer');                        
     }
 
     public function down()
