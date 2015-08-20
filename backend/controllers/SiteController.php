@@ -20,6 +20,15 @@ use common\models\Instructor;
  */
 class SiteController extends Controller
 {
+   public function init() {
+       parent::init();
+       
+        \Yii::$app->survey->surveyId = Yii::$app->settings->get('survey.surveyId', 'LimeSurvey');
+        \Yii::$app->survey->username = Yii::$app->settings->get('survey.username', 'LimeSurvey');
+        \Yii::$app->survey->password = Yii::$app->settings->get('survey.password', 'LimeSurvey');
+        \Yii::$app->survey->url = Yii::$app->settings->get('survey.url', 'LimeSurvey');
+   }
+    
     /**
      * @inheritdoc
      */
