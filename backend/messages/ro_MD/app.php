@@ -25,6 +25,8 @@ return [
     'Data1' => '',
     'Data2' => '',
     'Data3' => '',
+    'Data4' => '',
+    'Settings' => 'Setări'
     'Delete' => 'Șterge',
     'Faculties' => '',
     'Group Activities' => '',

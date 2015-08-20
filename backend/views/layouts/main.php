@@ -53,6 +53,9 @@ AppAsset::register($this);
 		            ['label' => Yii::t('app', '{n, plural, =1{Group} other{Groups}}', ['n' => 2]), 'url' => ['/group/index']],
 //		            ['label' => Yii::t('app', '{n, plural, =1{Group Activity} other{Groups Activities}}', ['n' => 2]), 'url' => ['/group-activity/index']],
 				]],
+				['label' => Yii::t('app', 'Data4'), 'items' => [
+		            ['label' => Yii::t('app', 'Settings'), 'url' => ['/settings']],
+				]],
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
