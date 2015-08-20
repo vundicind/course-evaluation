@@ -80,7 +80,7 @@ $this->title = 'My Yii Application';
     
     </div>
     
-        <?php if(count($nonCorrespondence['FACULTATEA']) > 0):?>
+        <?php if(isset($nonCorrespondence['FACULTATEA']) && count($nonCorrespondence['FACULTATEA']) > 0):?>
         	<h3>Faculty noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['FACULTATEA'] as $row):?>
@@ -89,7 +89,7 @@ $this->title = 'My Yii Application';
         	</ul>
         <?php endif;?>
     
-        <?php if(count($nonCorrespondence['CICLUL']) > 0):?>
+        <?php if(isset($nonCorrespondence['CICLUL']) && count($nonCorrespondence['CICLUL']) > 0):?>
         	<h3>Study cycle noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['CICLUL'] as $row):?>
@@ -98,7 +98,7 @@ $this->title = 'My Yii Application';
         	</ul>
         <?php endif;?>
 
-        <?php if(count($nonCorrespondence['SPECIALITATEA']) > 0):?>
+        <?php if(isset($nonCorrespondence['SPECIALITATEA']) && count($nonCorrespondence['SPECIALITATEA']) > 0):?>
         	<h3>Specialty noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['SPECIALITATEA'] as $row):?>
@@ -107,7 +107,7 @@ $this->title = 'My Yii Application';
         	</ul>
         <?php endif;?>
     	
-        <?php if(count($nonCorrespondence['GRUPA']) > 0):?>
+        <?php if(isset($nonCorrespondence['GRUPA']) && count($nonCorrespondence['GRUPA']) > 0):?>
         	<h3>Group noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['GRUPA'] as $row):?>
@@ -116,7 +116,7 @@ $this->title = 'My Yii Application';
         	</ul>
         <?php endif;?>
 
-        <?php if(count($nonCorrespondence['DISCIPLINA']) > 0):?>
+        <?php if(isset($nonCorrespondence['DISCIPLINA']) && count($nonCorrespondence['DISCIPLINA']) > 0):?>
         	<h3>Course noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['DISCIPLINA'] as $row):?>
@@ -125,7 +125,7 @@ $this->title = 'My Yii Application';
         	</ul>
         <?php endif;?>
 
-        <?php if(count($nonCorrespondence['ACTIVITATEA']) > 0):?>
+        <?php if(isset($nonCorrespondence['ACTIVITATEA']) && count($nonCorrespondence['ACTIVITATEA']) > 0):?>
         	<h3>Activity type noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['ACTIVITATEA'] as $row):?>
@@ -134,7 +134,7 @@ $this->title = 'My Yii Application';
         	</ul>
         <?php endif;?>
 
-        <?php if(count($nonCorrespondence['PROFESORUL']) > 0):?>
+        <?php if(isset($nonCorrespondence['PROFESORUL']) && count($nonCorrespondence['PROFESORUL']) > 0):?>
         	<h3>Instructor noncorrespondence:</h3>
         	<ul>
         	<?php foreach($nonCorrespondence['PROFESORUL'] as $row):?>

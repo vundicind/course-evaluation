@@ -73,9 +73,14 @@ class SiteController extends Controller
     	
     	$missing = ['specialties' => [], 'groups' => [], 'courses' => [], 'instructors' => []];
     	$nonCorrespondence = [];
-    	foreach(\Yii::$app->survey->listGroups($surveyId) as $gData) {
+
+      $sGroups = \Yii::$app->survey->listGroups($surveyId);
+      if($sGroups == null || isset($sGroups['status'])) $sGroups = [];
+    	foreach($sGroups as $gData) {
     		if($gData['id']['language'] == 'ro' && $gData['group_name'] == 'META') {
-    			foreach(\Yii::$app->survey->listQuestions($surveyId, $gData['id']['gid']) as $qData)
+    		  $sQuestions = \Yii::$app->survey->listQuestions($surveyId, $gData['id']['gid']);
+          if($sQuestions == null || isset($sQuestions['status'])) $sQuestions = [];
+    			foreach($sQuestions as $qData)
     			{
     			    switch($qData['title'])
     			    {
