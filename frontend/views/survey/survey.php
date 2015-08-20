@@ -17,8 +17,10 @@ if($subgroup && !isset($_GET['subgroup'])):
 <?php else: ?>
 
 <?= \frontend\widgets\EmbedSurvey::widget([
-    'src' => 'http://dmc.usarb.md/limesurvey',
-    'surveyId' => '453434',
+    //'src' => 'http://dmc.usarb.md/limesurvey',
+    'src' => $settings->set('survey.url', 'LimeSurvey'),
+    //'surveyId' => '453434',
+    'surveyId' => Yii::$app->settings->get('survey.surveyId', 'LimeSurvey'),
     'lang' => 'ro',
     'params' => [
         'FACULTATEA' => $group->specialty->faculty_id,
