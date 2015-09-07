@@ -11,6 +11,7 @@ return [
         ],
         'settings' => [
             'class' => 'pheme\settings\components\Settings',
+            'cache' => null,
         ],
     ],
     'modules' => [
