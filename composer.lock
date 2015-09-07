@@ -1619,12 +1619,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phemellc/yii2-settings.git",
-                "reference": "58184c85354a8b81effa5a7a70d0c07281d8ad2a"
+                "reference": "5966762e1e9cc75da1196fa39089fe6732eea636"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phemellc/yii2-settings/zipball/58184c85354a8b81effa5a7a70d0c07281d8ad2a",
-                "reference": "58184c85354a8b81effa5a7a70d0c07281d8ad2a",
+                "url": "https://api.github.com/repos/phemellc/yii2-settings/zipball/5966762e1e9cc75da1196fa39089fe6732eea636",
+                "reference": "5966762e1e9cc75da1196fa39089fe6732eea636",
                 "shasum": ""
             },
             "require": {
@@ -1653,7 +1653,7 @@
                 "config",
                 "yii2"
             ],
-            "time": "2015-01-13 13:34:13"
+            "time": "2015-07-27 14:56:32"
         },
         {
             "name": "pheme/yii2-toggle-column",

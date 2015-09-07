@@ -69,7 +69,7 @@ class SurveyController extends \yii\web\Controller
         \Yii::$app->session->set('survey.groupId', $group_id);
     
         //$semester_id = 2;//!!!
-	$semester_id = Yii::$app->settings->get('app.semesterId', 'App');
+	$semester_id = \Yii::$app->settings->get('app.semesterId', 'App');
         
         $groupActivities = \Yii::$app->session->get('survey.groupActivities');
         $groupActivitiesIndex = \Yii::$app->session->get('survey.groupActivitiesIndex');
