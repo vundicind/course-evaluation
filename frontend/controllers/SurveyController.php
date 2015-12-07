@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use yii\helpers\Url;
+use yii\web\Controller;
 use common\models\Faculty;
 use common\models\StudyCycle;
 use common\models\StudyForm;
@@ -11,11 +12,21 @@ use common\models\Group;
 use common\models\GroupActivity;
 use common\models\ActivityType;
 
-class SurveyController extends \yii\web\Controller
+class SurveyController extends Controller
 {
+
+   public function init() {
+	parent::init();
+    
+	\Yii::$app->survey->surveyId = \Yii::$app->settings->get('survey.surveyId', 'LimeSurvey');
+        \Yii::$app->survey->username = \Yii::$app->settings->get('survey.username', 'LimeSurvey');
+        \Yii::$app->survey->password = \Yii::$app->settings->get('survey.password', 'LimeSurvey');
+        \Yii::$app->survey->url = \Yii::$app->settings->get('survey.url', 'LimeSurvey');
+    }
+
     public function actionIndex()
     {
-    	$surveyId = \Yii::$app->survey->surveyId;
+    	$surveyId = \Yii::$app->survey->surveyId;echo "===".$surveyId;
     	$sp = \Yii::$app->survey->getSurveyProperties($surveyId, ['sid', 'active', 'expires']);
     	if(isset($sp['active']) && $sp['active'] == 'Y' && empty($sp['expires']))
     		$active = true;
