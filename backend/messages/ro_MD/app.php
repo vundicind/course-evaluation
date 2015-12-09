@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Brand' => 'Evaluarea cursurilor (USARB)',
     'Activity Types' => '',
     'Are you sure you want to delete this item?' => 'Sigur doriți să ștergeți acest element?',
     'Courses' => '',
