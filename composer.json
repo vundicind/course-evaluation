@@ -18,7 +18,7 @@
         "yiisoft/yii2": "2.0.4",
         "yiisoft/yii2-bootstrap": "2.0.4",
         "yiisoft/yii2-swiftmailer": "2.0.3",
-        "wbraganca/yii2-dynamicform": "v2.0.2",
+        "wbraganca/yii2-dynamicform": "v1.1.0",
         "kartik-v/yii2-widgets": "v3.4.0",
         "kartik-v/yii2-checkbox-x": "v1.0.1",
         "fguillot/json-rpc": "v0.0.2",

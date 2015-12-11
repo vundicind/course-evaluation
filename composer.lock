@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "47210ea8db54ee32243863be8bf31c82",
-    "content-hash": "8e351381a2f65308b06d82c7d087c469",
+    "hash": "4943d3c8f4cc02650b463867eb738605",
+    "content-hash": "c7047bce919cbaf7993c96348ea905d8",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -1919,16 +1919,16 @@
         },
         {
             "name": "wbraganca/yii2-dynamicform",
-            "version": "v2.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wbraganca/yii2-dynamicform.git",
-                "reference": "9b761d708aa6c06c1219e1c2ed321f7cb205b09f"
+                "reference": "85c8f7e980b914457e12f91035d428d8fd2eba09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wbraganca/yii2-dynamicform/zipball/9b761d708aa6c06c1219e1c2ed321f7cb205b09f",
-                "reference": "9b761d708aa6c06c1219e1c2ed321f7cb205b09f",
+                "url": "https://api.github.com/repos/wbraganca/yii2-dynamicform/zipball/85c8f7e980b914457e12f91035d428d8fd2eba09",
+                "reference": "85c8f7e980b914457e12f91035d428d8fd2eba09",
                 "shasum": ""
             },
             "require": {
@@ -1961,7 +1961,7 @@
                 "yii2 dynamic form",
                 "yii2-dynamicform"
             ],
-            "time": "2015-02-25 15:31:24"
+            "time": "2014-12-16 12:21:17"
         },
         {
             "name": "yiisoft/yii2",
