@@ -1,4 +1,4 @@
-course-evaluation
+courseeval
 =================
 
 A course evaluation system for USARB
@@ -43,15 +43,15 @@ Make all db migrations
 
 ```sh
 cd /etc/apache2/conf-available
-ln -s /home/vundicind/course-evaluation/provision/apache2.conf course-evaluation.conf
-a2enconf course-evaluation
+ln -s /opt/courseeval/provision/apache2.conf courseeval.conf
+a2enconf courseeval
 service apache2 reload
 ```
 
 You can test now enetering in the browser the address:
 
-http://localhost/course-evaluation/
+http://localhost/courseeval/
 
 or 
 
-http://localhost/course-evaluation-backend/
+http://localhost/courseeval-backend/
