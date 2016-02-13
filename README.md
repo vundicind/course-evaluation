@@ -4,15 +4,27 @@ courseeval
 A course evaluation system for USARB
 
 Installation
---------------
+------------
 
 ### Yii
 
-Initialize the application 
+Initialize the application:
+
+#### Debian
 
 ```sh
 ./init
+cp provision/*-local.php common/config/
 ```
+
+#### Windows
+
+```sh
+php.exe init
+copy provision\*-local.php common\config\
+```
+
+
 
 Make sure you have `mcrypt` installed and enabled.
 
