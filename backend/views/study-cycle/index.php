@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Study Cycle',
+    'modelClass' => Yii::t('app', 'Study Cycle'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 

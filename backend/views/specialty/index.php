@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Specialty',
+    'modelClass' => Yii::t('app', 'Specialty'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'faculty', 'value' => 'faculty.name'],
             ['attribute' => 'studyCycle', 'value' => 'studyCycle.name'],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'contentOptions' => ['style'=>'min-width: 70px;'] ],
         ],
     ]); ?>
 

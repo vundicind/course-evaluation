@@ -34,7 +34,7 @@ AppAsset::register($this);
     ]);
 
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app', 'Data1'), 'items' => [
             ['label' => Yii::t('app', '{n, plural, =1{Faculty} other{Faculties}}', ['n' => 2]), 'url' => ['/faculty/index']],
             ['label' => Yii::t('app', '{n, plural, =1{Study Cycle} other{Study Cycles}}', ['n' => 2]), 'url' => ['/study-cycle/index']],
